@@ -1,0 +1,5 @@
+name = "variety-is"
+compatibility_date = "2026-03-25"
+
+[assets]
+directory = "./dist"

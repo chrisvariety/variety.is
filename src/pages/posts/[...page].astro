@@ -68,7 +68,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 	</div>
 	<div class="grid sm:grid-cols-[3fr_1fr] sm:gap-x-8 sm:gap-y-16">
 		<div>
-			{
+			{/* Pinned Posts - hidden for now
 				pinnedPosts.length > 0 && (
 					<section class="mb-16">
 						<h2 class="title mb-6 text-xl">Pinned Posts</h2>
@@ -81,7 +81,7 @@ const descYearKeys = Object.keys(groupedByYear).sort((a, b) => +b - +a);
 						</ul>
 					</section>
 				)
-			}
+			*/}
 			{
 				descYearKeys.map((yearKey) => (
 					<section class="mb-16">

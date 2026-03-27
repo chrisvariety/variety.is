@@ -404,20 +404,6 @@ const dataId = `appellation-graph-data-${which}`;
       nodeGroup.attr("transform", (d) => `translate(${d.x ?? 0},${d.y ?? 0})`);
     });
 
-    // Fit graph into view once settled
-    simulation.on("end", () => {
-      const bounds = (g.node() as SVGGElement).getBBox();
-      const pad = 60;
-      const scale = Math.min(
-        width / (bounds.width + pad * 2),
-        height / (bounds.height + pad * 2),
-        1.5,
-      );
-      const tx = width / 2 - (bounds.x + bounds.width / 2) * scale;
-      const ty = height / 2 - (bounds.y + bounds.height / 2) * scale;
-      const transform = d3Zoom.zoomIdentity.translate(tx, ty).scale(scale);
-      svg.call(zoomBehavior.transform, transform);
-    });
   }
 
   for (const el of document.querySelectorAll<HTMLElement>(

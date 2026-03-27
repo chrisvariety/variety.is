@@ -23,6 +23,7 @@ const post = defineCollection({
           src: image(),
         })
         .optional(),
+      subtitle: z.string().optional(),
       draft: z.boolean().default(false),
       ogImage: z.string().optional(),
       tags: z.array(z.string()).default([]).transform(removeDupsAndLowerCase),

@@ -1,0 +1,109 @@
+<chapter_text>
+{{ chapterText }}
+</chapter_text>
+
+You are an AI assistant specializing in narrative analysis and character linguistics. Your task is to analyze the <chapter_text> above to identify and extract all unique identifiers (appellations) that characters use to refer to one another. Follow these instructions carefully:
+
+Your goal is to create a structured list of appellations in the format (Source, Appellation, Target). Analyze the <chapter_text> above and follow these steps:
+
+1. Analyze the Text:
+   - Read the chapter text thoroughly, paying close attention to dialogue, narration, and internal monologue.
+   - Your goal is to find how one entity refers to another using a specific name or identifier.
+   - Focus on identifiers such as:
+     - Diminutives (e.g., "Sam" for Samuel)
+     - Pet names or nicknames (e.g., "sis", "buddy", "love")
+     - Formal titles used as unique identifiers (e.g., "the Captain", "Professor")
+     - Epithets or descriptive names (e.g., "Wise One", "the tall stranger")
+     - Any other name-like identifier that singles out a specific character (e.g., "Elara", "Mr. Blackwood").
+
+2. Identify Appellations:
+   For each unique identifier you find, identify the three key components:
+   - Source: The character that _uses_ the identifier (the speaker or thinker). You will record their name as it appears in the text.
+   - Target: The character that is _being referred to_ by the identifier. You will record their name as it appears in the text.
+   - Appellation: The description of the identifier itself (see step 3).
+
+3. Define the Appellation:
+   The appellation consists of three parts: a phrase, a type, and a context.
+
+   Phrase (`phrase`): The literal, exact string from the text that is used as the identifier (e.g., "Sam", "the Captain", "Wise One").
+
+   Type (`type`): Choose the most fitting type that best describes the identifier. Use uppercase format. Here are the valid types:
+   - DIMINUTIVE: A shortened or familiar form of a proper name (e.g., "Sam" for Samuel, "Liz" for Elizabeth).
+   - PET_NAME: An informal, often affectionate, name not based on the proper name (e.g., "sis", "buddy", "darling").
+   - FORMAL_TITLE: A rank, profession, or honorific used as an identifier (e.g., "the Captain", "Professor", "My Lord").
+   - EPITHET: A descriptive phrase or adjective-based name (e.g., "the Wise One", "the tall stranger", "Man of Steel").
+   - GIVEN_NAME: The character's standard first name, last name, or full name (e.g., "Elara", "Blackwood", "Marcus Blackwood").
+
+   Context (`context`): Write a concise, one-sentence description of the usage. This should explain the nature of its use (e.g., "Used affectionately," "Used as a formal address," "Used when angry") and note its frequency if apparent.
+
+4. Output Format:
+   Your final output must be a single JSON object. Do not include any text or explanations outside of this block. For each unique appellation you identify, create an object following this exact structure:
+
+```json
+{
+  "appellations": [
+    {
+      "sourceCharacterName": "[character name as it appears in the text]",
+      "appellation": {
+        "phrase": "[Literal phrase from text, e.g., 'Sam']",
+        "type": "[APPELLATION_TYPE]",
+        "context": "[Concise description of its usage, tone, and frequency.]"
+      },
+      "targetCharacterName": "[character name as it appears in the text]"
+    }
+  ]
+}
+```
+
+Example:
+
+```json
+{
+  "appellations": [
+    {
+      "sourceCharacterName": "Lena",
+      "appellation": {
+        "phrase": "Marcus",
+        "type": "GIVEN_NAME",
+        "context": "Used as a standard, familiar address during conversation."
+      },
+      "targetCharacterName": "Marcus"
+    },
+    {
+      "sourceCharacterName": "Marcus",
+      "appellation": {
+        "phrase": "Lena",
+        "type": "DIMINUTIVE",
+        "context": "An affectionate diminutive used frequently in private, e.g., \"Lena, you can't mean it!\""
+      },
+      "targetCharacterName": "Lena"
+    },
+    {
+      "sourceCharacterName": "Kaelen",
+      "appellation": {
+        "phrase": "the old man",
+        "type": "EPITHET",
+        "context": "Used in internal monologue to dismissively refer to the Elder."
+      },
+      "targetCharacterName": "Elder"
+    },
+    {
+      "sourceCharacterName": "Guard",
+      "appellation": {
+        "phrase": "Captain",
+        "type": "FORMAL_TITLE",
+        "context": "Used as a formal, respectful address of rank."
+      },
+      "targetCharacterName": "Kaelen"
+    }
+  ]
+}
+```
+
+Remember:
+
+- The `phrase` value MUST be the literal, case-sensitive string found in the text.
+- Aggregate multiple uses of the _exact same_ (Source name, Target name, Phrase) combination. Your `context` entry should summarize the overall usage, tone, and frequency (e.g., "Used regularly, always affectionately," or "A common, neutral identifier."). Do not create duplicate entries.
+- Adhere strictly to the provided JSON format for your output.
+
+Now, analyze the chapter text and produce your list of appellations following these instructions. Your final output should contain only the JSON object with appellations.

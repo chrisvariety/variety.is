@@ -1,0 +1,269 @@
+---
+import Tabs from "@/components/bearnie/tabs/Tabs.astro";
+import TabsList from "@/components/bearnie/tabs/TabsList.astro";
+import TabsTrigger from "@/components/bearnie/tabs/TabsTrigger.astro";
+import TabsContent from "@/components/bearnie/tabs/TabsContent.astro";
+import Button from "@/components/bearnie/button/Button.astro";
+import TypeLabel from "./TypeLabel.astro";
+
+const triggerClass = [
+  "rounded-none border-b-2 border-transparent px-4 py-2.5 text-xs",
+  "data-[state=active]:border-accent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:font-semibold",
+].join(" ");
+
+type Entry = {
+  phrase: string;
+  types: string[];
+  chapters: string;
+  note: string;
+  spoiler?: boolean;
+};
+
+type Tab = {
+  label: string;
+  relationship: string;
+  entries: Entry[];
+};
+
+const tabs: Tab[] = [
+  {
+    label: "Fourth Wing",
+    relationship: "Xaden \u2192 Violet",
+    entries: [
+      {
+        phrase: "Sorrengail",
+        types: ["given name"],
+        chapters: "ch 1\u201333",
+        note: "Surname-only. Distancing, impersonal.",
+      },
+      {
+        phrase: "Violence",
+        types: ["epithet", "pet name"],
+        chapters: "ch 9\u201338",
+        note: "Starts as a mocking taunt during sparring; reclassified as a term of endearment by chapter 19.",
+      },
+      {
+        phrase: "Violet",
+        types: ["given name"],
+        chapters: "ch 27\u201339",
+        note: "Her actual first name. Only appears once he\u2019s emotionally invested.",
+      },
+      {
+        phrase: "Vi",
+        types: ["diminutive"],
+        chapters: "ch 32, 38",
+        note: "Used exactly twice, both times in moments of extreme vulnerability.",
+      },
+    ],
+  },
+  {
+    label: "ACOTAR",
+    relationship: "Feyre \u2192 Tamlin",
+    entries: [
+      {
+        phrase: "the beast",
+        types: ["epithet"],
+        chapters: "ch 4\u20136",
+        note: "Before she knows him. Pure fear and unfamiliarity.",
+      },
+      {
+        phrase: "the golden-haired one",
+        types: ["epithet"],
+        chapters: "ch 6\u20137",
+        note: "Transitional. She sees him in human form but doesn\u2019t know his name.",
+      },
+      {
+        phrase: "Tamlin",
+        types: ["given name"],
+        chapters: "ch 7\u201346",
+        note: "Once named, used consistently throughout the book.",
+      },
+      {
+        phrase: "the High Lord",
+        types: ["formal title"],
+        chapters: "ch 15\u201328",
+        note: "Layers onto the given name after she learns his political status.",
+      },
+      {
+        phrase: "Tam",
+        types: ["diminutive"],
+        chapters: "ch 18\u201331",
+        note: "Intimate moments only.",
+      },
+    ],
+  },
+  {
+    label: "Dire Bound",
+    relationship: "Killian \u2192 Meryn",
+    entries: [
+      {
+        phrase: "kitten",
+        types: ["pet name"],
+        chapters: "ch 1\u201357",
+        note: "Present from the very first chapter to the last. Affectionate and possessive, it stays constant through everything.",
+      },
+      {
+        phrase: "Mer",
+        types: ["diminutive"],
+        chapters: "ch 4\u201354",
+        note: "The tender shortening. Used to ground her, soothe her, or signal intimacy without weight.",
+      },
+      {
+        phrase: "Meryn",
+        types: ["given name"],
+        chapters: "ch 3\u201357",
+        note: "Full name reserved for concern, urgency, or emotional directness. When he says it, something is serious.",
+      },
+      {
+        phrase: "my queen",
+        types: ["pet name"],
+        chapters: "ch 50",
+        note: "Appears once as her political status becomes real.",
+        spoiler: true,
+      },
+      {
+        phrase: "beloved / love",
+        types: ["pet name"],
+        chapters: "ch 57",
+        note: "The most intimate names arrive last, but the context is manipulation. He\u2019s stealing her power while he says them.",
+        spoiler: true,
+      },
+    ],
+  },
+  {
+    label: "Wuthering Heights",
+    relationship: "Two Catherines \u2192 Heathcliff",
+    entries: [
+      {
+        phrase: "Heathcliff",
+        types: ["given name"],
+        chapters: "ch 3\u201315",
+        note: "Cathy (the mother). Bare first name, childhood intimacy. 10 uses.",
+      },
+      {
+        phrase: "my Heathcliff",
+        types: ["pet name"],
+        chapters: "ch 15",
+        note: "Cathy. Possessive, idealized\u2014used once, in delirium.",
+      },
+      {
+        phrase: "Mr. Heathcliff",
+        types: ["formal title"],
+        chapters: "ch 2\u201330",
+        note: "Miss Catherine (the daughter). Always formal. Generational distance.",
+      },
+      {
+        phrase: "uncle",
+        types: ["pet name"],
+        chapters: "ch 21, 27",
+        note: "Miss Catherine. A brief, failed attempt at kinship.",
+      },
+    ],
+  },
+];
+
+---
+
+<div
+  class="not-prose my-6 overflow-hidden rounded-lg border border-(--color-muted)/20"
+>
+  <Tabs defaultValue="tab-0">
+    <TabsList
+      class="h-auto w-full justify-start gap-0 overflow-x-auto rounded-none border-b border-(--color-muted)/20 bg-transparent p-0"
+    >
+      {
+        tabs.map((tab, i) => (
+          <TabsTrigger value={`tab-${i}`} class={triggerClass}>
+            {tab.label}
+          </TabsTrigger>
+        ))
+      }
+    </TabsList>
+
+    {
+      tabs.map((tab, i) => (
+        <TabsContent value={`tab-${i}`} class="mt-0">
+          <p class="border-b border-(--color-muted)/20 bg-(--color-muted)/3 px-5 py-2 text-xs font-medium tracking-wide text-muted uppercase">
+            {tab.relationship}
+          </p>
+          <ul class="space-y-3 px-5 py-4">
+            {tab.entries
+              .filter((e) => !e.spoiler)
+              .map((entry) => (
+                <li class="flex flex-col gap-0.5">
+                  <div class="flex flex-wrap items-baseline gap-x-2">
+                    <span class="font-semibold text-sm text-accent-2">
+                      &ldquo;{entry.phrase}&rdquo;
+                    </span>
+                    <span class="text-xs">
+                      {entry.types.map((t, i) => (
+                        <>{i > 0 && " \u2192 "}<TypeLabel type={t} /></>
+                      ))}
+                    </span>
+                    <span class="ml-auto text-xs tabular-nums text-muted">
+                      {entry.chapters}
+                    </span>
+                  </div>
+                  <p class="text-xs text-muted leading-relaxed">{entry.note}</p>
+                </li>
+              ))}
+          </ul>
+          {tab.entries.some((e) => e.spoiler) && (
+            <div class="relative px-5 pb-4" data-spoiler-wrapper>
+              <ul
+                class="space-y-3 blur-sm select-none pointer-events-none"
+                data-spoiler-content
+              >
+                {tab.entries
+                  .filter((e) => e.spoiler)
+                  .map((entry) => (
+                    <li class="flex flex-col gap-0.5">
+                      <div class="flex flex-wrap items-baseline gap-x-2">
+                        <span class="font-semibold text-sm text-accent-2">
+                          &ldquo;{entry.phrase}&rdquo;
+                        </span>
+                        <span class="text-xs">
+                          {entry.types.map((t, i) => (
+                            <>{i > 0 && " \u2192 "}<TypeLabel type={t} /></>
+                          ))}
+                        </span>
+                        <span class="ml-auto text-xs tabular-nums text-muted">
+                          {entry.chapters}
+                        </span>
+                      </div>
+                      <p class="text-xs text-muted leading-relaxed">
+                        {entry.note}
+                      </p>
+                    </li>
+                  ))}
+              </ul>
+              <div
+                class="absolute inset-0 flex items-center justify-center"
+                data-spoiler-overlay
+              >
+                <Button variant="outline" size="sm">
+                  ⚠️ Spoiler — click to reveal
+                </Button>
+              </div>
+            </div>
+          )}
+        </TabsContent>
+      ))
+    }
+  </Tabs>
+</div>
+
+<script>
+  document.querySelectorAll("[data-spoiler-wrapper]").forEach((wrapper) => {
+    const overlay = wrapper.querySelector("[data-spoiler-overlay]");
+    const content = wrapper.querySelector("[data-spoiler-content]");
+    overlay?.querySelector("button")?.addEventListener("click", () => {
+      overlay.remove();
+      content?.classList.remove(
+        "blur-sm",
+        "select-none",
+        "pointer-events-none",
+      );
+    });
+  });
+</script>

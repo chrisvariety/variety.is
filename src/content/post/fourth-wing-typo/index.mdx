@@ -1,0 +1,320 @@
+---
+title: "Finding a typo in Fourth Wing using AI"
+subtitle: "Should we be using AI to help edit books?"
+description: "Using AI tools to find a typo in Rebecca Yarros' bestselling novel Fourth Wing"
+publishDate: "26 Mar 2026"
+tags: ["ai", "fiction"]
+---
+
+import { Code } from "astro-expressive-code/components";
+import AppellationExample from "./AppellationExample.astro";
+import TupleExample from "./TupleExample.astro";
+import TypeLabel from "./TypeLabel.astro";
+import Collapsible from "@/components/bearnie/collapsible/Collapsible.astro";
+import CollapsibleTrigger from "@/components/bearnie/collapsible/CollapsibleTrigger.astro";
+import CollapsibleContent from "@/components/bearnie/collapsible/CollapsibleContent.astro";
+import AppellationGraph from "./AppellationGraph.astro";
+
+Grab your copy of _Fourth Wing_. I'll wait. Near the start of chapter 10 you'll see a blink-and-you-miss-it typo in a last name:
+
+> ...because you made friends with Barlowe and **Siefert**...
+
+That's not how you spell "Siefert" in the book though: it's S-e-i, not S-i-e.
+
+I stumbled upon this while trying to gather all the ways characters refer to each other in novels. These nicknames / epithets / what I'll call _appellations_ are very specific and something authors clearly spend a lot of time on:
+
+<AppellationExample />
+
+How do you gather data like this? Let's use AI for something other than code for a change...
+
+## The Prompt
+
+After reading entirely too much romantasy and thinking entirely too much about how characters refer to each other, you might determine we'll to collect a few things:
+
+- **Source:** Who is speaking?
+- **Target**: Who is being referred to?
+- **Phrase**: What phrase was used by the _source_ to identify the _target_?
+- **Type**: Is it a <TypeLabel type="DIMINUTIVE" />, <TypeLabel type="PET_NAME" />, <TypeLabel type="FORMAL_TITLE" />, <TypeLabel type="EPITHET" />, or <TypeLabel type="GIVEN_NAME" />?
+- **Context**: A short description of how the phrase was used (tone, frequency, circumstances).
+
+<TupleExample
+  prefix="fw"
+  title="Fourth Wing — example tuples"
+  rows={[
+    {
+      source: "Xaden",
+      target: "Violet",
+      phrase: "Sorrengail",
+      types: ["GIVEN_NAME"],
+      context:
+        "Surname-only address from their first encounter. Authoritative, distancing. Never affectionate.",
+    },
+    {
+      source: "Xaden",
+      target: "Violet",
+      phrase: "Violence",
+      types: ["EPITHET", "PET_NAME"],
+      context:
+        "Coined during close-contact sparring as a mocking nickname derived from her name and aggressive fighting attempts. By chapter 19 the same word is moaned intimately during their kiss.",
+    },
+    {
+      source: "Xaden",
+      target: "Violet",
+      phrase: "Violet",
+      types: ["GIVEN_NAME"],
+      context:
+        "Her actual first name, used urgently and intimately to persuade her to leave for his sake. Only appears once he is emotionally invested.",
+    },
+    {
+      source: "Violet",
+      target: "Xaden",
+      phrase: "Xaden",
+      types: ["GIVEN_NAME"],
+      context: "Used repeatedly in direct address during intimate and emotional encounters.",
+    },
+    {
+      source: "Violet",
+      target: "Xaden",
+      phrase: "Riorson",
+      types: ["GIVEN_NAME"],
+      context:
+        "Used sternly the first time to order him out of the room. Later appears commandingly and playfully.",
+    },
+    {
+      source: "Dain",
+      target: "Violet",
+      phrase: "Vi",
+      types: ["DIMINUTIVE"],
+      context: "Affectionate childhood nickname used repeatedly with concern and familiarity.",
+    },
+    {
+      source: "Dain",
+      target: "Xaden",
+      phrase: "Wingleader",
+      types: ["FORMAL_TITLE"],
+      context:
+        "Used emphatically through clenched teeth to acknowledge Xaden's position. Dain never uses his first name.",
+    },
+    {
+      source: "Violet",
+      target: "Rhiannon",
+      phrase: "Rhi",
+      types: ["DIMINUTIVE"],
+      context: "Affectionate casual address used in squad banter, teasing, and excited moments.",
+    },
+    {
+      source: "Mira",
+      target: "Violet",
+      phrase: "sis",
+      types: ["PET_NAME"],
+      context: "Used emphatically while warning Violet about the dangers of the parapet.",
+    },
+  ]}
+/>
+
+Since we read books chapter-by-chapter, it makes sense to ask the AI to do the same, and it helps keep context windows relatively small[^1]. We'll feed it one chapter at a time and ask for `[Source, Phrase, Target, Type, Context]` tuples.
+
+[^1]:
+    Yes, context windows are rather large at 1-2M+, but how well do they actually utilize that context window? Turns out, not very well at all:
+
+    ![GPT-5.4: 1M Context Reality Check](./gpt-5.4-effective-context-window.jpeg)
+
+```jinja wrap title="appellations.jinja" {"Leading with the chapter content helps with prompt caching":1-3} {"I highly recommend providing an example in all your prompts.":57-101} include:./prompt-v1.jinja
+
+```
+
+## Run The Prompt
+
+Running the prompt is simple enough[^2]. I'm using [MiniMax M2.7](https://www.minimax.io/models/text/m27) because it [scores well on the axis of Intelligence vs. Price](https://artificialanalysis.ai/models#intelligence-vs-price-log-scale). Processing novels is token intensive: _Fourth Wing_ is ~272,393 tokens in all.
+
+:::note
+I'll switch to _Jane Eyre_ for the rest of this post, as it is in public domain which means you can play along at home!
+:::
+
+```javascript
+import { readFileSync } from "fs";
+import { join } from "path";
+
+import Anthropic from "@anthropic-ai/sdk";
+import { Template } from "@huggingface/jinja";
+
+const __dirname = new URL(".", import.meta.url).pathname;
+
+const chapterText = readFileSync(join(__dirname, "chapter-content.txt"), "utf-8");
+
+const templateSource = readFileSync(join(__dirname, "prompt-v1.jinja"), "utf-8");
+
+const template = new Template(templateSource);
+const prompt = template.render({ chapterText });
+
+const client = new Anthropic();
+
+const stream = client.messages.stream({
+  messages: [{ role: "user", content: prompt }],
+  model: "MiniMax-M2.7",
+  max_tokens: 8192,
+});
+
+for await (const chunk of stream) {
+  if (chunk.type === "content_block_delta" && chunk.delta.type === "text_delta") {
+    process.stdout.write(chunk.delta.text);
+  }
+}
+```
+
+[^2]: If you're running this for real, I'd recommend [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs).
+
+---
+
+<TupleExample
+  prefix="je"
+  title="Jane Eyre — Chapter XXVII"
+  rows={[
+    {
+      source: "Jane",
+      target: "Mr. Rochester",
+      phrase: "sir",
+      types: ["FORMAL_TITLE"],
+      context: "Formal respectful address used consistently throughout.",
+    },
+    {
+      source: "Jane",
+      target: "Mr. Rochester",
+      phrase: "Mr. Rochester",
+      types: ["GIVEN_NAME"],
+      context: "Standard formal address used in conversation.",
+    },
+    {
+      source: "Jane",
+      target: "Mr. Rochester",
+      phrase: "my master",
+      types: ["EPITHET"],
+      context: "Respectful designation acknowledging his authority.",
+    },
+    {
+      source: "Jane",
+      target: "Mr. Rochester",
+      phrase: "dear master",
+      types: ["EPITHET"],
+      context: "Affectionate and respectful term used when blessing him.",
+    },
+    {
+      source: "Jane",
+      target: "Mr. Rochester",
+      phrase: "my dear master",
+      types: ["EPITHET"],
+      context: "Warm respectful address used in farewell.",
+    },
+    {
+      source: "Jane",
+      target: "Jane",
+      phrase: "my daughter",
+      types: ["PET_NAME"],
+      context: "Words spoken by the visionary voice/mother figure addressing Jane.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "Jane",
+      types: ["GIVEN_NAME"],
+      context: "Standard address used frequently throughout the conversation.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "my little darling",
+      types: ["PET_NAME"],
+      context: "Term of endearment used when expressing affection.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "Janet",
+      types: ["DIMINUTIVE"],
+      context: "Affectionate diminutive of Jane used several times in the chapter.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "my darling",
+      types: ["PET_NAME"],
+      context: "Term of endearment used when speaking intimately to Jane.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "little Jane",
+      types: ["DIMINUTIVE"],
+      context: "Affectionate address referring to Jane's small stature.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "my little Jane",
+      types: ["DIMINUTIVE"],
+      context: "Affectionate diminutive used when reminiscing about past encounters.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "my hope",
+      types: ["PET_NAME"],
+      context: "Term of endearment expressing deep emotional attachment.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "my love",
+      types: ["PET_NAME"],
+      context: "Direct expression of love used in moment of anguish.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Jane",
+      phrase: "little Jane's love",
+      types: ["PET_NAME"],
+      context: "Used when referring to Jane's affection as his desired reward.",
+    },
+    {
+      source: "Mr. Rochester",
+      target: "Bertha Mason",
+      phrase: "my wife",
+      types: ["EPITHET"],
+      context: "Used mockingly or bitterly to refer to Bertha Mason.",
+    },
+  ]}
+/>
+
+Not bad, and that's with a model that costs $0.3/m in, $1.2/m out ($0.06/m cached read!). The only one that stands out to me is "sir" -- too generic. Let's update the prompt to avoid results like that:
+
+```jinja title="appellations-v2.jinja" wrap ins={7-8}
+2. Identify Appellations:
+   For each unique identifier you find, identify the three key components:
+   - Source: The character that _uses_ the identifier (the speaker or thinker). You will record their name as it appears in the text.
+   - Target: The character that is _being referred to_ by the identifier. You will record their name as it appears in the text.
+   - Appellation: The description of the identifier itself (see step 3).
+
+   Exclude overly generic phrases (e.g., "sir", "the man", "the woman", "the place") and generic insults or derogatory terms (e.g., "idiot", "fool") that could refer to multiple characters. Only include identifiers that clearly and specifically refer to a single named character.
+```
+
+## The Results
+
+Once you have all the appellations extracted (across all the chapters!), you can visualize the relationships as a directed graph:
+
+<AppellationGraph which={1} />
+
+## The Typo
+
+Running it for _Fourth Wing_ will reveal the typo, click "Oren" & "Ridoc" to highlight it:
+
+<AppellationGraph which={2} />
+
+## Extra Credit
+
+I've intentionally glossed over some details which are needed to create a 'production ready' system:
+
+- Converting a book into plain text (or markdown) is not as trivial as you might think, nor is breaking it up by chapter.
+
+- Often novels are written in the first person, so it makes sense to include a hint of whose point of view we're experiencing. Some tricky novels even switch the point of view mid-chapter, usually indicated by a [dinkus](https://en.wikipedia.org/wiki/Dinkus).
+
+- You'll want to provide a list of named characters for the LLM to select from, extracted separately. Otherwise, across chapters you'll sometimes receive a source or target name of "Jane" and sometimes "Jane Eyre". Are those the same person? That's actually a fairly difficult question, particularly for books like _Wuthering Heights_ which literally has two characters named "Catherine". The answer ends up being in the chapter text itself.

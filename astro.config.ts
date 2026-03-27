@@ -10,6 +10,7 @@ import icon from "astro-icon";
 import robotsTxt from "astro-robots-txt";
 import webmanifest from "astro-webmanifest";
 import { defineConfig, envField } from "astro/config";
+import { pluginCollapsible } from "expressive-code-collapsible";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeUnwrapImages from "rehype-unwrap-images";
@@ -18,6 +19,7 @@ import remarkDirective from "remark-directive"; /* Handle ::: directives as node
 
 import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add admonitions */
 import { remarkGithubCard } from "./src/plugins/remark-github-card";
+import { remarkIncludeCode } from "./src/plugins/remark-include-code";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 import { expressiveCodeOptions, siteConfig } from "./src/site.config";
 
@@ -28,7 +30,14 @@ export default defineConfig({
     domains: ["webmention.io"],
   },
   integrations: [
-    expressiveCode(expressiveCodeOptions),
+    expressiveCode({
+      ...expressiveCodeOptions,
+      shiki: {
+        bundledLangs: ["javascript", "json", "jsonc", "markdown", "jinja"],
+        injectLangsIntoNestedCodeBlocks: true,
+      },
+      plugins: [pluginCollapsible({ lineThreshold: 50, previewLines: 30 })],
+    }),
     icon(),
     sitemap(),
     mdx(),
@@ -81,7 +90,13 @@ export default defineConfig({
       ],
       rehypeUnwrapImages,
     ],
-    remarkPlugins: [remarkReadingTime, remarkDirective, remarkGithubCard, remarkAdmonitions],
+    remarkPlugins: [
+      remarkReadingTime,
+      remarkIncludeCode,
+      remarkDirective,
+      remarkGithubCard,
+      remarkAdmonitions,
+    ],
     remarkRehype: {
       footnoteLabelProperties: {
         className: [""],

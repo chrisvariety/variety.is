@@ -1,0 +1,1184 @@
+{
+  "nodes": [
+    {
+      "id": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "name": "Helen Burns"
+    },
+    {
+      "id": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "name": "Jane"
+    },
+    {
+      "id": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "name": "Mrs. Reed"
+    },
+    {
+      "id": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "name": "Mr. Brocklehurst"
+    },
+    {
+      "id": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "name": "Miss Temple"
+    },
+    {
+      "id": "019b8c1b-7dba-76bf-9fcc-b38015747027",
+      "name": "Miss Miller"
+    },
+    {
+      "id": "019b8c1b-7dba-7703-ade3-4417eec469e5",
+      "name": "Miss Scatcherd"
+    },
+    {
+      "id": "019b8c1b-7dba-7744-8f4a-734045b4c2da",
+      "name": "Miss Smith"
+    },
+    {
+      "id": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "name": "John Reed"
+    },
+    {
+      "id": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "name": "Eliza"
+    },
+    {
+      "id": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "name": "Georgiana"
+    },
+    {
+      "id": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "name": "Bessie"
+    },
+    {
+      "id": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "name": "Abbot"
+    },
+    {
+      "id": "019b8c1b-7dba-7540-a1e9-b7df23b21122",
+      "name": "Mr. Lloyd"
+    },
+    {
+      "id": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "name": "Mrs. Fairfax"
+    },
+    {
+      "id": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "name": "Mr. Rochester"
+    },
+    {
+      "id": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "name": "Adèle"
+    },
+    {
+      "id": "019b8c1b-7dbb-70b4-9505-40065d8a82bf",
+      "name": "Sophie (Adèle's nurse)"
+    },
+    {
+      "id": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "name": "Grace Poole"
+    },
+    {
+      "id": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "name": "Leah (Thornfield maidservant)"
+    },
+    {
+      "id": "019b8c1b-7dbb-7223-af0d-0646dbb6b60c",
+      "name": "John (Thornfield coachman)"
+    },
+    {
+      "id": "019b8c1b-7dbb-7267-ade6-23dd72f9582e",
+      "name": "Pilot (Mr. Rochester's dog)"
+    },
+    {
+      "id": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "name": "Miss Ingram"
+    },
+    {
+      "id": "019b8c1b-7dbd-7f6c-b25e-3debe9f23369",
+      "name": "Mason"
+    },
+    {
+      "id": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "name": "Robert"
+    },
+    {
+      "id": "019b8c1b-7dc1-79be-8fa7-30a4de1fecea",
+      "name": "Mr. Briggs"
+    },
+    {
+      "id": "019b8c1b-7dc4-7b72-b9a3-81e2eadc6ac3",
+      "name": "Mr. Oliver"
+    },
+    {
+      "id": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "name": "Diana"
+    },
+    {
+      "id": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "name": "Mary Rivers"
+    },
+    {
+      "id": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "name": "St. John"
+    },
+    {
+      "id": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "name": "Miss Oliver"
+    },
+    {
+      "id": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "name": "Hannah (Rivers family servant)"
+    },
+    {
+      "id": "019b8c1b-7dc5-7e02-b27e-aa67a64e32db",
+      "name": "John"
+    },
+    {
+      "id": "019b8c1b-7dc5-7e47-bfd9-87f1fba73a0b",
+      "name": "Mary (Ferndean Manor servant, old John's wife)"
+    },
+    {
+      "id": "019b8c1b-7dbb-72fc-8a08-a277f8779c8b",
+      "name": "Mr. Carter"
+    },
+    {
+      "id": "019b8c1b-7dbe-704e-bfb3-9cfdcef11bc7",
+      "name": "Theodore"
+    },
+    {
+      "id": "019b8c1b-7dbe-7003-b72f-28fc7c5a237c",
+      "name": "mama"
+    },
+    {
+      "id": "019b8c1b-7dbe-7d23-86b4-70748896a427",
+      "name": "Amy Eshton"
+    },
+    {
+      "id": "019b8c1b-7dbe-7d85-b1c3-60306d2ddb68",
+      "name": "Louisa Eshton"
+    },
+    {
+      "id": "019b8c1b-7dc4-7892-99b5-1d126fca3038",
+      "name": "Mr. Wood"
+    },
+    {
+      "id": "019b8c1b-7dbe-7097-bcfe-7d25bf751221",
+      "name": "Lady Lynn"
+    },
+    {
+      "id": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "name": "former Thornfield butler (Rochester Arms innkeeper)"
+    }
+  ],
+  "links": [
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["darling", "Jane"]
+    },
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["Mrs. Reed"]
+    },
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "phrases": ["Mr. Brocklehurst"]
+    },
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "phrases": ["Miss Temple"]
+    },
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-76bf-9fcc-b38015747027",
+      "phrases": ["Miss Miller"]
+    },
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-7703-ade3-4417eec469e5",
+      "phrases": ["Miss Scatcherd"]
+    },
+    {
+      "source": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "target": "019b8c1b-7dba-7744-8f4a-734045b4c2da",
+      "phrases": ["Miss Smith"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "phrases": [
+        "a girl sitting on a stone bench",
+        "Burns",
+        "dear Helen",
+        "Helen",
+        "Helen Burns",
+        "my acquaintance of the verandah",
+        "the girl with whom I had conversed in the verandah"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["aunt", "Aunt Reed", "Mrs. Reed", "my aunt", "Reed", "Your Missis"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["her son John", "John", "John Reed", "Mr. John"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "phrases": ["cousin Eliza", "Eliza"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["cousin", "Georgiana"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "phrases": ["Bessie", "Bessie Leaven", "Bessie Lee", "Mrs. Leaven"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "phrases": ["Abbot", "Martha Abbot"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7540-a1e9-b7df23b21122",
+      "phrases": ["Mr. Lloyd"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "phrases": [
+        "a black pillar",
+        "black column",
+        "Brocklehurst",
+        "Mr. Brocklehurst",
+        "our patron",
+        "Rev. Robert Brocklehurst",
+        "stony stranger",
+        "that gaunt outline",
+        "the “Coming Man,”"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "phrases": ["Maria Temple", "Miss Temple"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-76bf-9fcc-b38015747027",
+      "phrases": ["Miss Miller"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7703-ade3-4417eec469e5",
+      "phrases": ["Miss Scatcherd"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7744-8f4a-734045b4c2da",
+      "phrases": ["Miss Smith"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "phrases": ["dame Fairfax", "Mrs. Fairfax"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": [
+        "Edward",
+        "Edward Fairfax Rochester",
+        "Edward Rochester",
+        "Fairfax Rochester",
+        "kind master",
+        "King Ahasuerus",
+        "Mr. Edward",
+        "Mr. Rochester",
+        "Mr. Rochester’s",
+        "my dear Edward",
+        "my dear master",
+        "my master",
+        "my Mr. Rochester",
+        "my poor master",
+        "Sibyl",
+        "the master",
+        "three-tailed bashaw",
+        "your master"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": ["Adèle", "little Adèle", "my darling Adèle"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-70b4-9505-40065d8a82bf",
+      "phrases": ["Sophie"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "phrases": ["Grace", "Grace Poole", "Mrs. Poole"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "phrases": ["Leah"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-7223-af0d-0646dbb6b60c",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-7267-ade6-23dd72f9582e",
+      "phrases": ["Pilot"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "phrases": ["Blanche", "Miss Ingram"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbd-7f6c-b25e-3debe9f23369",
+      "phrases": ["Mason", "Mr. Mason"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "phrases": ["Robert"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc1-79be-8fa7-30a4de1fecea",
+      "phrases": ["Mr. Briggs"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc4-7b72-b9a3-81e2eadc6ac3",
+      "phrases": ["Mr. Oliver"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "phrases": ["Diana", "Die"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": [
+        "cousin",
+        "ecclesiastical cousin",
+        "Mr. Rivers",
+        "Mr. St. John",
+        "St. John",
+        "St. John Rivers",
+        "the missionary"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "phrases": ["Miss Oliver", "Rosamond", "Rosamond Oliver", "the Peri", "this earthly angel"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "phrases": ["Hannah"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc5-7e02-b27e-aa67a64e32db",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "target": "019b8c1b-7dc5-7e47-bfd9-87f1fba73a0b",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Jane", "Jane Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "target": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "phrases": ["Bessie"]
+    },
+    {
+      "source": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "target": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "phrases": ["Abbot"]
+    },
+    {
+      "source": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "target": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "phrases": ["Mr. Brocklehurst"]
+    },
+    {
+      "source": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Joan", "Madam Mope", "that nasty Jane Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["mama"]
+    },
+    {
+      "source": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "target": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "phrases": ["Eliza", "Lizzy"]
+    },
+    {
+      "source": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["Georgiana", "Georgy"]
+    },
+    {
+      "source": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["cousin Jane Eyre", "Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["Mama"]
+    },
+    {
+      "source": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["Jack"]
+    },
+    {
+      "source": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["Georgiana"]
+    },
+    {
+      "source": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["mama"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Miss Jane", "Poor Miss Jane"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["Missis", "Mrs. Reed"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["Master John", "Mr. John"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "phrases": ["Miss Reed"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["Miss Georgiana"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "phrases": ["Miss Abbot"]
+    },
+    {
+      "source": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "target": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "phrases": ["Robert Leaven"]
+    },
+    {
+      "source": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["Missis"]
+    },
+    {
+      "source": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["Master John", "Master Reed", "Your young master"]
+    },
+    {
+      "source": "019b8c1b-7dba-7446-9d96-f240ecd334d2",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["Little darling", "Miss Georgiana"]
+    },
+    {
+      "source": "019b8c1b-7dba-7540-a1e9-b7df23b21122",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Miss Jane", "Miss Jane Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-7540-a1e9-b7df23b21122",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["Mrs. Reed"]
+    },
+    {
+      "source": "019b8c1b-7dba-7540-a1e9-b7df23b21122",
+      "target": "019b8c1b-7dba-73e7-a2fd-a005e614ab8e",
+      "phrases": ["nurse"]
+    },
+    {
+      "source": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Jane Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "target": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "phrases": ["Miss Temple"]
+    },
+    {
+      "source": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "target": "019b8c1b-7dba-7744-8f4a-734045b4c2da",
+      "phrases": ["Miss Smith"]
+    },
+    {
+      "source": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "target": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "phrases": ["Helen", "Helen Burns"]
+    },
+    {
+      "source": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Jane", "Jane Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "target": "019b8c1b-7dba-7540-a1e9-b7df23b21122",
+      "phrases": ["Mr. Lloyd"]
+    },
+    {
+      "source": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "target": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "phrases": ["Mr. Brocklehurst"]
+    },
+    {
+      "source": "019b8c1b-7dba-767b-9319-026c5e134eb8",
+      "target": "019b8c1b-7dba-76bf-9fcc-b38015747027",
+      "phrases": ["Miss Miller"]
+    },
+    {
+      "source": "019b8c1b-7dba-7703-ade3-4417eec469e5",
+      "target": "019b8c1b-7dba-7127-8c3d-00fff6783ece",
+      "phrases": ["Burns"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["Mr. Edward", "Mr. Rochester", "the master"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": ["Adela", "little Adela Varens", "Miss Adela", "Miss Varens"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "phrases": ["Grace", "Grace Poole"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "phrases": ["Leah"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-7223-af0d-0646dbb6b60c",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-72fc-8a08-a277f8779c8b",
+      "phrases": ["Mr. Carter"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "phrases": ["Blanche", "Honourable Blanche", "Miss Ingram"]
+    },
+    {
+      "source": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "target": "019b8c1b-7dbe-704e-bfb3-9cfdcef11bc7",
+      "phrases": ["Lord Ingram"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": [
+        "adopted daughter",
+        "bonny wee thing",
+        "capricious witch",
+        "changeling",
+        "darling Jane",
+        "elf",
+        "Eve",
+        "fairy",
+        "fire-spirit",
+        "hard little thing",
+        "Jane",
+        "Jane Eyre",
+        "Janet",
+        "little elfish",
+        "little friend",
+        "Little friend",
+        "Little Jane",
+        "little nonnette",
+        "little sceptic",
+        "little tyrant",
+        "mademoiselle",
+        "malicious elf",
+        "ministrant spirit",
+        "Miss Eyre",
+        "Mrs. Rochester",
+        "mustard-seed",
+        "my bride",
+        "My cherished preserver",
+        "my darling",
+        "my equal",
+        "my fairy",
+        "my good little girl",
+        "my Jane",
+        "my likeness",
+        "my little darling",
+        "my little friend",
+        "my little wife",
+        "My living darling",
+        "my pet lamb",
+        "my skylark",
+        "neophyte",
+        "pale, little elf",
+        "provoking puppet",
+        "salamander",
+        "sa petite maman Anglaise",
+        "Sententious sage",
+        "sprite",
+        "the apple of his eye",
+        "the governess",
+        "Truant"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["old Madam Reed"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["a Reed of Gateshead"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["Georgiana Reed"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "phrases": ["Brocklehurst"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "phrases": ["Mrs. Fairfax", "the old lady"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": [
+        "Adèle",
+        "fillette",
+        "French floweret",
+        "genuine daughter of Paris",
+        "little Adèle",
+        "the bairn"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-70b4-9505-40065d8a82bf",
+      "phrases": ["Sophie"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "phrases": ["Grace", "Grace Poole", "Mrs. Poole"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-7223-af0d-0646dbb6b60c",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-7267-ade6-23dd72f9582e",
+      "phrases": ["Pilot"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-72fc-8a08-a277f8779c8b",
+      "phrases": ["Carter"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "phrases": [
+        "Blanche",
+        "Blanche Ingram",
+        "Miss Ingram",
+        "Mrs. Rochester",
+        "my beautiful Blanche",
+        "my lovely one",
+        "my wife",
+        "Queen Boadicea"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbd-7f6c-b25e-3debe9f23369",
+      "phrases": ["Dick", "Mason", "Mr. Mason", "Richard"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbe-7003-b72f-28fc7c5a237c",
+      "phrases": ["my future mother-in-law"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbe-7d23-86b4-70748896a427",
+      "phrases": ["Amy"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dbe-7d85-b1c3-60306d2ddb68",
+      "phrases": ["Louisa"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dc1-79be-8fa7-30a4de1fecea",
+      "phrases": ["Briggs"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dc4-7892-99b5-1d126fca3038",
+      "phrases": ["Mr. Wood", "Wood"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": ["Rivers", "St. John"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "target": "019b8c1b-7dc5-7e47-bfd9-87f1fba73a0b",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["ma bonne amie", "ma chère Mdlle. Jeannette", "mademoiselle", "Mademoiselle Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "target": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "phrases": ["Madame Fairfax"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": [
+        "ami, Monsieur Edouard Fairfax de Rochester",
+        "Monsieur",
+        "Monsieur Rochester",
+        "Mr. Rochester"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "target": "019b8c1b-7dbb-70b4-9505-40065d8a82bf",
+      "phrases": ["Sophie"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "target": "019b8c1b-7dbb-7223-af0d-0646dbb6b60c",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "target": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "phrases": ["Mrs. Fairfax"]
+    },
+    {
+      "source": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["master"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["master", "Mr. Rochester"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": ["Miss Adèle"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "target": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "phrases": ["Mrs. Poole"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "target": "019b8c1b-7dbb-7223-af0d-0646dbb6b60c",
+      "phrases": ["John"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["Mr. Rochester"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": ["little doll", "little puppet", "tiresome monkey"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "target": "019b8c1b-7dbb-7267-ade6-23dd72f9582e",
+      "phrases": ["Pilot"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "target": "019b8c1b-7dbe-7003-b72f-28fc7c5a237c",
+      "phrases": ["mama", "my good mama"]
+    },
+    {
+      "source": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "target": "019b8c1b-7dbe-704e-bfb3-9cfdcef11bc7",
+      "phrases": ["Tedo", "Theodore"]
+    },
+    {
+      "source": "019b8c1b-7dbd-7f6c-b25e-3debe9f23369",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["Edward Fairfax Rochester", "Fairfax", "Rochester"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7003-b72f-28fc7c5a237c",
+      "target": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "phrases": [
+        "my angel girl",
+        "my best",
+        "my dearest",
+        "my lily-flower",
+        "my own",
+        "my queenly Blanche"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dbe-704e-bfb3-9cfdcef11bc7",
+      "target": "019b8c1b-7dbb-7519-8711-5495191a26b7",
+      "phrases": ["Blanche"]
+    },
+    {
+      "source": "019b8c1b-7dbe-704e-bfb3-9cfdcef11bc7",
+      "target": "019b8c1b-7dbe-7003-b72f-28fc7c5a237c",
+      "phrases": ["Dear mama", "my lady-mother"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7097-bcfe-7d25bf751221",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": ["Mr. Rochester’s ward"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7d23-86b4-70748896a427",
+      "target": "019b8c1b-7dbe-7d85-b1c3-60306d2ddb68",
+      "phrases": ["Louisa"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["missis", "Mrs. Reed"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "target": "019b8c1b-7dba-72d8-a45f-f16b69cb6f7f",
+      "phrases": ["Mr. John"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "target": "019b8c1b-7dba-7352-ab22-e8ce6640d560",
+      "phrases": ["Miss Reed"]
+    },
+    {
+      "source": "019b8c1b-7dbe-7f86-9974-44e5607ac439",
+      "target": "019b8c1b-7dba-739d-8519-59e64734a22d",
+      "phrases": ["Miss Georgiana"]
+    },
+    {
+      "source": "019b8c1b-7dc1-79be-8fa7-30a4de1fecea",
+      "target": "019b8c1b-7dbd-7f6c-b25e-3debe9f23369",
+      "phrases": ["Mr. Mason"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": [
+        "Jane",
+        "poor child",
+        "poor, emaciated, pallid wanderer",
+        "poor girl",
+        "the poor little soul"
+      ]
+    },
+    {
+      "source": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "target": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": ["St. John"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "target": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "phrases": ["Hannah"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Jane"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "target": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "phrases": ["Diana"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": ["St. John"]
+    },
+    {
+      "source": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "target": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "phrases": ["Rosamond Oliver"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Jane", "Jane Elliott", "Jane Eyre", "Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dba-7261-955e-da3b1aaf0211",
+      "phrases": ["Mrs. Reed", "Mrs. Reed of Gateshead"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dba-75f0-a759-ec880b128a58",
+      "phrases": ["Mr. Brocklehurst"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "phrases": ["Alice Fairfax"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["Mr. Rochester"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc1-79be-8fa7-30a4de1fecea",
+      "phrases": ["Briggs", "Mr. Briggs"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc4-7b72-b9a3-81e2eadc6ac3",
+      "phrases": ["Mr. Oliver"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "phrases": ["Diana", "Die"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": ["Mr. Rivers"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "phrases": ["Miss Oliver", "Miss Rosamond", "Rosamond Oliver", "the Rose of the World"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "target": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "phrases": ["Hannah"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["lusus naturæ"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "target": "019b8c1b-7dc4-7b72-b9a3-81e2eadc6ac3",
+      "phrases": ["papa", "Papa"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "target": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "phrases": ["Diana"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "target": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7a74-bc60-515752b953a2",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": ["Mr. Rivers"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["raight down dacent little crater"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "target": "019b8c1b-7dc4-7bb8-a508-6d038d509263",
+      "phrases": ["Diana"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "target": "019b8c1b-7dc4-7c09-9b7e-5fe7e751b720",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7bac-9133-039d7cb58eed",
+      "target": "019b8c1b-7dc5-7837-9734-0a07f76d5b63",
+      "phrases": ["Mr. Rivers", "Mr. St. John", "St. John"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["midge of a governess", "Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dba-7ea6-9857-8212e6e6790c",
+      "phrases": ["Mrs. Fairfax"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["Mr. Edward", "Mr. Rochester", "Poor Mr. Edward"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dbb-7062-baeb-c0f8d3791327",
+      "phrases": ["Miss Adèle"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dbb-70fb-aba1-7933e5b70a84",
+      "phrases": ["Mrs. Poole"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dbb-7142-9dc8-dcf41c7b5780",
+      "phrases": ["Leah"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dbb-72fc-8a08-a277f8779c8b",
+      "phrases": ["Mr. Carter"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7dbd-8ee1-4764c9d36cb5",
+      "target": "019b8c1b-7dc5-7e02-b27e-aa67a64e32db",
+      "phrases": ["Old John"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7e02-b27e-aa67a64e32db",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["Mr. Edward"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7e02-b27e-aa67a64e32db",
+      "target": "019b8c1b-7dc5-7e47-bfd9-87f1fba73a0b",
+      "phrases": ["Mary"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7e47-bfd9-87f1fba73a0b",
+      "target": "019b8c1b-7dba-71d4-b3d5-5a5946c8b287",
+      "phrases": ["Miss Eyre"]
+    },
+    {
+      "source": "019b8c1b-7dc5-7e47-bfd9-87f1fba73a0b",
+      "target": "019b8c1b-7dbb-7002-a508-1b749203051b",
+      "phrases": ["the master"]
+    }
+  ]
+}

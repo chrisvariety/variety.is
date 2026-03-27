@@ -1,0 +1,138 @@
+---
+import TypeLabel from "./TypeLabel.astro";
+
+type Row = {
+  source: string;
+  target: string;
+  phrase: string;
+  types: string[];
+  context: string;
+};
+
+interface Props {
+  rows: Row[];
+  title: string;
+  prefix?: string;
+}
+
+const { rows, title, prefix = "tuple" } = Astro.props;
+---
+
+<div
+  class="not-prose my-6 overflow-hidden rounded-lg border border-(--color-muted)/20"
+>
+  <p
+    class="border-b border-(--color-muted)/20 bg-(--color-muted)/3 px-5 py-2 text-xs font-medium tracking-wide text-muted uppercase"
+  >
+    {title}
+  </p>
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-(--color-muted)/20">
+        <th class="px-5 py-2.5 text-left text-xs font-semibold text-muted"
+          >Source</th
+        >
+        <th class="px-5 py-2.5 text-left text-xs font-semibold text-muted"
+          >Target</th
+        >
+        <th class="px-5 py-2.5 text-left text-xs font-semibold text-muted"
+          >Phrase</th
+        >
+        <th class="px-5 py-2.5 text-left text-xs font-semibold text-muted"
+          >Type</th
+        >
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row, i) => {
+          const ctxId = `${prefix}-ctx-${i}`;
+          const isLast = i === rows.length - 1;
+          const borderClass = isLast
+            ? ""
+            : "border-b border-(--color-muted)/10";
+          return (
+            <>
+              <tr
+                class={`${borderClass} cursor-pointer select-none hover:bg-(--color-muted)/5`}
+                data-ctx-trigger={ctxId}
+              >
+                <td class="px-5 py-2.5 text-xs">
+                  <span class="flex items-center gap-1.5">
+                    <button
+                      class="text-muted transition-transform duration-150 leading-none"
+                      data-ctx-btn={ctxId}
+                      aria-expanded="false"
+                      aria-controls={ctxId}
+                      aria-label={`Show context for ${row.source} calling ${row.target} "${row.phrase}"`}
+                    >
+                      ▾
+                    </button>
+                    {row.source}
+                  </span>
+                </td>
+                <td class="px-5 py-2.5 text-xs">{row.target}</td>
+                <td class="px-5 py-2.5 text-xs font-semibold text-accent-2">
+                  &ldquo;{row.phrase}&rdquo;
+                </td>
+                <td class="px-5 py-2.5 text-xs">
+                  {row.types.map((t, j) => (
+                    <>
+                      {j > 0 && " \u2192 "}
+                      <TypeLabel type={t} />
+                    </>
+                  ))}
+                </td>
+              </tr>
+              <tr id={ctxId} class={borderClass} hidden>
+                <td
+                  colspan="4"
+                  class="px-5 pb-3 pt-1 text-xs text-muted italic"
+                >
+                  {row.context}
+                </td>
+              </tr>
+            </>
+          );
+        })
+      }
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function initTupleExpand() {
+    document.querySelectorAll<HTMLElement>("[data-ctx-btn]").forEach((btn) => {
+      if (btn.dataset.initialized) return;
+      btn.dataset.initialized = "true";
+
+      const id = btn.getAttribute("aria-controls")!;
+      const row = btn.closest("tr")!;
+
+      const toggle = () => {
+        const ctx = document.getElementById(id);
+        if (!ctx) return;
+        const opening = ctx.hidden;
+        ctx.hidden = !opening;
+        btn.setAttribute("aria-expanded", String(opening));
+        btn.style.transform = opening ? "rotate(180deg)" : "";
+      };
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggle();
+      });
+      row.addEventListener("click", toggle);
+
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle();
+        }
+      });
+    });
+  }
+
+  initTupleExpand();
+  document.addEventListener("astro:page-load", initTupleExpand);
+</script>

@@ -1,0 +1,428 @@
+---
+import graphData1 from "./appellation-graph-data.json";
+import graphData2 from "./appellation-graph-data-2.json";
+
+interface Props {
+  which?: 1 | 2;
+}
+
+const { which = 1 } = Astro.props;
+const graphData = which === 2 ? graphData2 : graphData1;
+const containerId = `appellation-graph-${which}`;
+const dataId = `appellation-graph-data-${which}`;
+---
+
+<div class="not-prose my-8">
+  <div
+    id={containerId}
+    data-graph-data-id={dataId}
+    class="h-125 w-full rounded-lg border border-slate-700 bg-slate-950"
+  >
+  </div>
+  <p class="mt-2 text-xs text-muted">
+    Click a character to highlight their connections. Click two to see how they
+    refer to each other. Drag to rearrange. Scroll to zoom.
+  </p>
+</div>
+
+<script
+  is:inline
+  type="application/json"
+  id={dataId}
+  set:html={JSON.stringify(graphData)}
+/>
+
+<script>
+  import * as d3Drag from "d3-drag";
+  import * as d3Force from "d3-force";
+  import * as d3Selection from "d3-selection";
+  import * as d3Zoom from "d3-zoom";
+
+  interface GraphNode extends d3Force.SimulationNodeDatum {
+    id: string;
+    name: string;
+  }
+
+  interface GraphLink {
+    source: string;
+    target: string;
+    phrases: string[];
+  }
+
+  interface GraphData {
+    nodes: GraphNode[];
+    links: GraphLink[];
+  }
+
+  function initGraph(container: HTMLElement) {
+    const dataId = container.dataset.graphDataId!;
+    const raw = document.getElementById(dataId)!;
+    const { nodes, links } = JSON.parse(raw.textContent!) as GraphData;
+
+    if (nodes.length === 0) {
+      container.innerHTML =
+        '<div class="flex h-full items-center justify-center text-slate-500">No appellation data.</div>';
+      return;
+    }
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    const svg = d3Selection
+      .select(container)
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("touch-action", "none");
+
+    // Arrowhead markers — use container id as prefix to avoid SVG id collisions
+    const prefix = container.id;
+    const defs = svg.append("defs");
+    for (const [suffix, color] of [
+      ["arrowhead", "#475569"],
+      ["arrowhead-hi", "#60a5fa"],
+    ] as const) {
+      defs
+        .append("marker")
+        .attr("id", `${prefix}-${suffix}`)
+        .attr("viewBox", "0 -4 8 8")
+        .attr("refX", 20)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M0,-4L8,0L0,4")
+        .attr("fill", color);
+    }
+
+    const g = svg.append("g");
+
+    // Zoom + pan
+    const zoomBehavior = d3Zoom
+      .zoom<SVGSVGElement, unknown>()
+      .scaleExtent([0.2, 5])
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+      });
+
+    svg.call(zoomBehavior);
+
+    // Simulation-ready copies
+    const simNodes: GraphNode[] = nodes.map((n) => ({ ...n }));
+    const simLinks = links.map((l) => ({ ...l }));
+
+    // Adjacency for neighbor lookups
+    const neighbors = new Map<string, Set<string>>();
+    for (const link of simLinks) {
+      if (!neighbors.has(link.source)) neighbors.set(link.source, new Set());
+      if (!neighbors.has(link.target)) neighbors.set(link.target, new Set());
+      neighbors.get(link.source)!.add(link.target);
+      neighbors.get(link.target)!.add(link.source);
+    }
+
+    const simulation = d3Force
+      .forceSimulation(simNodes)
+      .force(
+        "link",
+        d3Force
+          .forceLink<GraphNode, (typeof simLinks)[number]>(simLinks)
+          .id((d) => d.id)
+          .distance(180),
+      )
+      .force("charge", d3Force.forceManyBody().strength(-400))
+      .force("center", d3Force.forceCenter(width / 2, height / 2))
+      .force("collision", d3Force.forceCollide(50));
+
+    // Detect reciprocal edges for curving
+    const edgeKeys = new Set(simLinks.map((l) => `${l.source}→${l.target}`));
+    const hasReciprocal = (l: (typeof simLinks)[number]) =>
+      edgeKeys.has(`${l.target}→${l.source}`);
+
+    const CURVE = 40;
+
+    // Links
+    const linkGroup = g
+      .append("g")
+      .selectAll<SVGGElement, (typeof simLinks)[number]>("g")
+      .data(simLinks)
+      .join("g");
+
+    const linkPaths = linkGroup
+      .append("path")
+      .attr("stroke", "#475569")
+      .attr("stroke-width", 1.5)
+      .attr("fill", "none")
+      .attr("marker-end", `url(#${prefix}-arrowhead)`);
+
+    // Edge labels (hidden by default)
+    const linkLabels = linkGroup
+      .append("text")
+      .text((d) => d.phrases.join(", "))
+      .attr("font-size", 10)
+      .attr("fill", "#cbd5e1")
+      .attr("text-anchor", "middle")
+      .attr("opacity", 0);
+
+    // Nodes
+    const nodeGroup = g
+      .append("g")
+      .selectAll<SVGGElement, GraphNode>("g")
+      .data(simNodes)
+      .join("g")
+      .attr("cursor", "pointer");
+
+    nodeGroup
+      .append("circle")
+      .attr("r", 16)
+      .attr("fill", "#3b82f6")
+      .attr("stroke", "#60a5fa")
+      .attr("stroke-width", 2);
+
+    nodeGroup
+      .append("text")
+      .text((d) => d.name)
+      .attr("font-size", 13)
+      .attr("font-weight", 600)
+      .attr("fill", "#f1f5f9")
+      .attr("text-anchor", "middle")
+      .attr("dy", -24);
+
+    // Selection logic
+    type SimLink = (typeof simLinks)[number];
+    const selected = new Set<string>();
+
+    function applySelection() {
+      if (selected.size === 0) {
+        nodeGroup.select("circle").attr("fill", "#3b82f6").attr("opacity", 1);
+        nodeGroup.select("text").attr("opacity", 1);
+        linkPaths
+          .attr("stroke", "#475569")
+          .attr("stroke-width", 1.5)
+          .attr("opacity", 1)
+          .attr("marker-end", `url(#${prefix}-arrowhead)`);
+        linkLabels.attr("opacity", 0);
+        return;
+      }
+
+      const selArray = Array.from(selected);
+
+      if (selected.size === 1) {
+        const focusId = selArray[0]!;
+        const neighborIds = neighbors.get(focusId) ?? new Set();
+
+        nodeGroup
+          .select("circle")
+          .attr("fill", (d: GraphNode) => {
+            if (d.id === focusId) return "#f59e0b";
+            if (neighborIds.has(d.id)) return "#3b82f6";
+            return "#334155";
+          })
+          .attr("opacity", (d: GraphNode) => {
+            if (d.id === focusId || neighborIds.has(d.id)) return 1;
+            return 0.15;
+          });
+
+        nodeGroup
+          .select("text")
+          .attr("opacity", (d: GraphNode) =>
+            d.id === focusId || neighborIds.has(d.id) ? 1 : 0.1,
+          );
+
+        const isConnected = (d: SimLink) => {
+          const src = (d.source as unknown as GraphNode).id ?? d.source;
+          const tgt = (d.target as unknown as GraphNode).id ?? d.target;
+          return src === focusId || tgt === focusId;
+        };
+
+        linkPaths
+          .attr("stroke", (d: SimLink) =>
+            isConnected(d) ? "#60a5fa" : "#334155",
+          )
+          .attr("stroke-width", (d: SimLink) => (isConnected(d) ? 2.5 : 1))
+          .attr("opacity", (d: SimLink) => (isConnected(d) ? 1 : 0.08))
+          .attr("marker-end", (d: SimLink) =>
+            isConnected(d)
+              ? `url(#${prefix}-arrowhead-hi)`
+              : `url(#${prefix}-arrowhead)`,
+          );
+
+        linkLabels.attr("opacity", (d: SimLink) => (isConnected(d) ? 1 : 0));
+        return;
+      }
+
+      // Two selected: edges between them
+      const [idA, idB] = selArray;
+      const pairSet = new Set([idA, idB]);
+
+      nodeGroup
+        .select("circle")
+        .attr("fill", (d: GraphNode) =>
+          pairSet.has(d.id) ? "#f59e0b" : "#334155",
+        )
+        .attr("opacity", (d: GraphNode) => (pairSet.has(d.id) ? 1 : 0.15));
+
+      nodeGroup
+        .select("text")
+        .attr("opacity", (d: GraphNode) => (pairSet.has(d.id) ? 1 : 0.1));
+
+      const isBetweenPair = (d: SimLink) => {
+        const src = (d.source as unknown as GraphNode).id ?? d.source;
+        const tgt = (d.target as unknown as GraphNode).id ?? d.target;
+        return pairSet.has(src) && pairSet.has(tgt);
+      };
+
+      linkPaths
+        .attr("stroke", (d: SimLink) =>
+          isBetweenPair(d) ? "#60a5fa" : "#334155",
+        )
+        .attr("stroke-width", (d: SimLink) => (isBetweenPair(d) ? 2.5 : 1))
+        .attr("opacity", (d: SimLink) => (isBetweenPair(d) ? 1 : 0.08))
+        .attr("marker-end", (d: SimLink) =>
+          isBetweenPair(d)
+            ? `url(#${prefix}-arrowhead-hi)`
+            : `url(#${prefix}-arrowhead)`,
+        );
+
+      linkLabels.attr("opacity", (d: SimLink) => (isBetweenPair(d) ? 1 : 0));
+    }
+
+    // Click node: toggle selection (max 2)
+    nodeGroup.on("click", (event, d) => {
+      event.stopPropagation();
+
+      if (selected.has(d.id)) {
+        selected.delete(d.id);
+      } else if (selected.size < 2) {
+        selected.add(d.id);
+      } else {
+        const first = selected.values().next().value!;
+        selected.delete(first);
+        selected.add(d.id);
+      }
+
+      applySelection();
+    });
+
+    // Click background to clear
+    svg.on("click", () => {
+      selected.clear();
+      applySelection();
+    });
+
+    // Drag behavior
+    function dragStarted(
+      event: d3Drag.D3DragEvent<SVGGElement, GraphNode, GraphNode>,
+    ) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      event.subject.fx = event.subject.x;
+      event.subject.fy = event.subject.y;
+    }
+
+    function dragged(
+      event: d3Drag.D3DragEvent<SVGGElement, GraphNode, GraphNode>,
+    ) {
+      event.subject.fx = event.x;
+      event.subject.fy = event.y;
+    }
+
+    function dragEnded(
+      event: d3Drag.D3DragEvent<SVGGElement, GraphNode, GraphNode>,
+    ) {
+      if (!event.active) simulation.alphaTarget(0);
+      event.subject.fx = null;
+      event.subject.fy = null;
+    }
+
+    nodeGroup.call(
+      d3Drag
+        .drag<SVGGElement, GraphNode>()
+        .on("start", dragStarted)
+        .on("drag", dragged)
+        .on("end", dragEnded),
+    );
+
+    // Tick
+    simulation.on("tick", () => {
+      linkPaths.attr("d", (d) => {
+        const src = d.source as unknown as GraphNode;
+        const tgt = d.target as unknown as GraphNode;
+        const sx = src.x ?? 0;
+        const sy = src.y ?? 0;
+        const tx = tgt.x ?? 0;
+        const ty = tgt.y ?? 0;
+
+        if (!hasReciprocal(d)) {
+          return `M${sx},${sy}L${tx},${ty}`;
+        }
+
+        const mx = (sx + tx) / 2;
+        const my = (sy + ty) / 2;
+        const dx = tx - sx;
+        const dy = ty - sy;
+        const len = Math.sqrt(dx * dx + dy * dy) || 1;
+        const px = -dy / len;
+        const py = dx / len;
+        const cx = mx + px * CURVE;
+        const cy = my + py * CURVE;
+        return `M${sx},${sy}Q${cx},${cy} ${tx},${ty}`;
+      });
+
+      linkLabels
+        .attr("x", (d) => {
+          const src = d.source as unknown as GraphNode;
+          const tgt = d.target as unknown as GraphNode;
+          const sx = src.x ?? 0;
+          const tx = tgt.x ?? 0;
+          const mx = (sx + tx) / 2;
+
+          if (!hasReciprocal(d)) return mx;
+
+          const sy = src.y ?? 0;
+          const ty = tgt.y ?? 0;
+          const dx = tx - sx;
+          const dy = ty - sy;
+          const len = Math.sqrt(dx * dx + dy * dy) || 1;
+          return mx + ((-dy / len) * CURVE) / 2;
+        })
+        .attr("y", (d) => {
+          const src = d.source as unknown as GraphNode;
+          const tgt = d.target as unknown as GraphNode;
+          const sy = src.y ?? 0;
+          const ty = tgt.y ?? 0;
+          const my = (sy + ty) / 2;
+
+          if (!hasReciprocal(d)) return my - 6;
+
+          const sx = src.x ?? 0;
+          const tx = tgt.x ?? 0;
+          const dx = tx - sx;
+          const dy = ty - sy;
+          const len = Math.sqrt(dx * dx + dy * dy) || 1;
+          return my + ((dx / len) * CURVE) / 2;
+        });
+
+      nodeGroup.attr("transform", (d) => `translate(${d.x ?? 0},${d.y ?? 0})`);
+    });
+
+    // Fit graph into view once settled
+    simulation.on("end", () => {
+      const bounds = (g.node() as SVGGElement).getBBox();
+      const pad = 60;
+      const scale = Math.min(
+        width / (bounds.width + pad * 2),
+        height / (bounds.height + pad * 2),
+        1.5,
+      );
+      const tx = width / 2 - (bounds.x + bounds.width / 2) * scale;
+      const ty = height / 2 - (bounds.y + bounds.height / 2) * scale;
+      const transform = d3Zoom.zoomIdentity.translate(tx, ty).scale(scale);
+      svg.call(zoomBehavior.transform, transform);
+    });
+  }
+
+  for (const el of document.querySelectorAll<HTMLElement>(
+    "[data-graph-data-id]",
+  )) {
+    initGraph(el);
+  }
+</script>

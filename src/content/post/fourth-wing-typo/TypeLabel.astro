@@ -1,0 +1,37 @@
+---
+interface Props {
+  type: string;
+}
+
+const { type } = Astro.props;
+
+const colors: Record<string, string> = {
+  // UPPERCASE (DB values)
+  GIVEN_NAME:   "var(--color-muted)",
+  EPITHET:      "oklch(65% 0.15 50)",
+  PET_NAME:     "oklch(60% 0.15 350)",
+  DIMINUTIVE:   "oklch(55% 0.15 300)",
+  FORMAL_TITLE: "oklch(55% 0.12 250)",
+  // lowercase display strings (AppellationExample)
+  "given name":         "var(--color-muted)",
+  "epithet":            "oklch(65% 0.15 50)",
+  "epithet \u2192 pet name": "oklch(65% 0.15 50)",
+  "pet name":           "oklch(60% 0.15 350)",
+  "diminutive":         "oklch(55% 0.15 300)",
+  "formal title":       "oklch(55% 0.12 250)",
+};
+
+// Render UPPERCASE DB values as human-readable lowercase
+const displayMap: Record<string, string> = {
+  GIVEN_NAME:   "given name",
+  PET_NAME:     "pet name",
+  FORMAL_TITLE: "formal title",
+  EPITHET:      "epithet",
+  DIMINUTIVE:   "diminutive",
+};
+
+const display = displayMap[type] ?? type;
+const color = colors[type] ?? "var(--color-muted)";
+---
+
+<span style={`color: ${color}`}>{display}</span>

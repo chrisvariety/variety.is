@@ -1,0 +1,118 @@
+---
+/* prettier-ignore */
+/* @formatter:off */
+interface Props {
+  species: string;
+  eye: string;
+  hat: string;
+  /** Unique ID for this sprite instance (needed for animation grouping) */
+  id?: string;
+  class?: string;
+}
+
+const { species, eye, hat, id, class: className } = Astro.props;
+
+// --- Sprite data (from sprites.ts) ---
+const E = "{E}";
+const BODIES: Record<string, string[][]> = {
+  duck:     [['            ','    __      ',`  <(${E} )___  `,'   (  ._>   ','    `--\u00B4    '],
+             ['            ','    __      ',`  <(${E} )___  `,'   (  ._>   ','    `--\u00B4~   '],
+             ['            ','    __      ',`  <(${E} )___  `,'   (  .__>  ','    `--\u00B4    ']],
+  goose:    [['            ',`     (${E}>    `,'     ||     ','   _(__)_   ','    ^^^^    '],
+             ['            ',`    (${E}>     `,'     ||     ','   _(__)_   ','    ^^^^    '],
+             ['            ',`     (${E}>>   `,'     ||     ','   _(__)_   ','    ^^^^    ']],
+  blob:     [['            ','   .----.   ',`  ( ${E}  ${E} )  `,'  (      )  ','   `----\u00B4   '],
+             ['            ','  .------.  ',` (  ${E}  ${E}  ) `,' (        ) ','  `------\u00B4  '],
+             ['            ','    .--.    ',`   (${E}  ${E})   `,'   (    )   ','    `--\u00B4    ']],
+  cat:      [['            ','   /\\_/\\    ',`  ( ${E}   ${E})  `,'  (  \u03C9  )   ','  (")_(")   '],
+             ['            ','   /\\_/\\    ',`  ( ${E}   ${E})  `,'  (  \u03C9  )   ','  (")_(")~  '],
+             ['            ','   /\\-/\\    ',`  ( ${E}   ${E})  `,'  (  \u03C9  )   ','  (")_(")   ']],
+  dragon:   [['            ','  /^\\  /^\\  ',` <  ${E}  ${E}  > `,' (   ~~   ) ','  `-vvvv-\u00B4  '],
+             ['            ','  /^\\  /^\\  ',` <  ${E}  ${E}  > `,' (        ) ','  `-vvvv-\u00B4  '],
+             ['   ~    ~   ','  /^\\  /^\\  ',` <  ${E}  ${E}  > `,' (   ~~   ) ','  `-vvvv-\u00B4  ']],
+  octopus:  [['            ','   .----.   ',`  ( ${E}  ${E} )  `,'  (______)  ','  /\\/\\/\\/\\  '],
+             ['            ','   .----.   ',`  ( ${E}  ${E} )  `,'  (______)  ','  \\/\\/\\/\\/  '],
+             ['     o      ','   .----.   ',`  ( ${E}  ${E} )  `,'  (______)  ','  /\\/\\/\\/\\  ']],
+  owl:      [['            ','   /\\  /\\   ',`  ((${E})(${E}))  `,'  (  ><  )  ','   `----\u00B4   '],
+             ['            ','   /\\  /\\   ',`  ((${E})(${E}))  `,'  (  ><  )  ','   .----.   '],
+             ['            ','   /\\  /\\   ',`  ((${E})(-))  `,'  (  ><  )  ','   `----\u00B4   ']],
+  penguin:  [['            ','  .---.     ',`  (${E}>${E})     `,' /(   )\\    ','  `---\u00B4     '],
+             ['            ','  .---.     ',`  (${E}>${E})     `,' |(   )|    ','  `---\u00B4     '],
+             ['  .---.     ',`  (${E}>${E})     `,' /(   )\\    ','  `---\u00B4     ','   ~ ~      ']],
+  turtle:   [['            ','   _,--._   ',`  ( ${E}  ${E} )  `,' /[______]\\ ','  ``    ``  '],
+             ['            ','   _,--._   ',`  ( ${E}  ${E} )  `,' /[______]\\ ','   ``  ``   '],
+             ['            ','   _,--._   ',`  ( ${E}  ${E} )  `,' /[======]\\ ','  ``    ``  ']],
+  snail:    [['            ',` ${E}    .--.  `,'  \\  ( @ )  ','   \\_`--\u00B4   ','  ~~~~~~~   '],
+             ['            ',`  ${E}   .--.  `,'  |  ( @ )  ','   \\_`--\u00B4   ','  ~~~~~~~   '],
+             ['            ',` ${E}    .--.  `,'  \\  ( @  ) ','   \\_`--\u00B4   ','   ~~~~~~   ']],
+  ghost:    [['            ','   .----.   ',`  / ${E}  ${E} \\  `,'  |      |  ','  ~`~``~`~  '],
+             ['            ','   .----.   ',`  / ${E}  ${E} \\  `,'  |      |  ','  `~`~~`~`  '],
+             ['    ~  ~    ','   .----.   ',`  / ${E}  ${E} \\  `,'  |      |  ','  ~~`~~`~~  ']],
+  axolotl:  [['            ','}~(______)~{',`}~(${E} .. ${E})~{`,'  ( .--. )  ','  (_/  \\_)  '],
+             ['            ','~}(______){~',`~}(${E} .. ${E}){~`,'  ( .--. )  ','  (_/  \\_)  '],
+             ['            ','}~(______)~{',`}~(${E} .. ${E})~{`,'  (  --  )  ','  ~_/  \\_~  ']],
+  capybara: [['            ','  n______n  ',` ( ${E}    ${E} ) `,' (   oo   ) ','  `------\u00B4  '],
+             ['            ','  n______n  ',` ( ${E}    ${E} ) `,' (   Oo   ) ','  `------\u00B4  '],
+             ['    ~  ~    ','  u______n  ',` ( ${E}    ${E} ) `,' (   oo   ) ','  `------\u00B4  ']],
+  cactus:   [['            ',' n  ____  n ',` | |${E}  ${E}| | `,' |_|    |_| ','   |    |   '],
+             ['            ','    ____    ',` n |${E}  ${E}| n `,' |_|    |_| ','   |    |   '],
+             [' n        n ',' |  ____  | ',` | |${E}  ${E}| | `,' |_|    |_| ','   |    |   ']],
+  robot:    [['            ','   .[||].   ',`  [ ${E}  ${E} ]  `,'  [ ==== ]  ','  `------\u00B4  '],
+             ['            ','   .[||].   ',`  [ ${E}  ${E} ]  `,'  [ -==- ]  ','  `------\u00B4  '],
+             ['     *      ','   .[||].   ',`  [ ${E}  ${E} ]  `,'  [ ==== ]  ','  `------\u00B4  ']],
+  rabbit:   [['            ','   (\\__/)   ',`  ( ${E}  ${E} )  `,' =(  ..  )= ','  (")__(")  '],
+             ['            ','   (|__/)   ',`  ( ${E}  ${E} )  `,' =(  ..  )= ','  (")__(")  '],
+             ['            ','   (\\__/)   ',`  ( ${E}  ${E} )  `,' =( .  . )= ','  (")__(")  ']],
+  mushroom: [['            ',' .-o-OO-o-. ','(__________)',`   |${E}  ${E}|   `,'   |____|   '],
+             ['            ',' .-O-oo-O-. ','(__________)',`   |${E}  ${E}|   `,'   |____|   '],
+             ['   . o  .   ',' .-o-OO-o-. ','(__________)',`   |${E}  ${E}|   `,'   |____|   ']],
+  chonk:    [['            ','  /\\    /\\  ',` ( ${E}    ${E} ) `,' (   ..   ) ','  `------\u00B4  '],
+             ['            ','  /\\    /|  ',` ( ${E}    ${E} ) `,' (   ..   ) ','  `------\u00B4  '],
+             ['            ','  /\\    /\\  ',` ( ${E}    ${E} ) `,' (   ..   ) ','  `------\u00B4~ ']],
+};
+
+const HAT_LINES: Record<string, string> = {
+  none: '',
+  crown: '   \\^^^/    ',
+  tophat: '   [___]    ',
+  propeller: '    -+-     ',
+  halo: '   (   )    ',
+  wizard: '    /^\\     ',
+  beanie: '   (___)    ',
+  tinyduck: '    ,>      ',
+};
+
+function renderSprite(sp: string, ey: string, h: string, frame: number): string[] {
+  const frames = BODIES[sp]!;
+  const body = frames[frame % frames.length]!.map(l => l.replaceAll('{E}', ey));
+  const lines = [...body];
+  if (h !== 'none' && !lines[0]!.trim()) lines[0] = HAT_LINES[h]!;
+  if (!lines[0]!.trim() && frames.every(f => !f[0]!.trim())) lines.shift();
+  return lines;
+}
+
+const frameCount = BODIES[species]?.length ?? 3;
+const frames = Array.from({ length: frameCount }, (_, i) => renderSprite(species, eye, hat, i));
+---
+
+<div class:list={["buddy-sprite", className]} data-buddy-sprite={id ?? ""}>
+  {frames.map((lines, fi) => (
+    <pre
+      class:list={[
+        "buddy-sprite-frame leading-[1.15] text-[10px] sm:text-xs",
+        fi === 0 ? "buddy-sprite-visible" : "buddy-sprite-hidden"
+      ]}
+      data-frame={fi}
+      style="font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; margin: 0; white-space: pre;"
+    >{lines.join('\n')}</pre>
+  ))}
+</div>
+
+<style>
+  .buddy-sprite-hidden {
+    display: none;
+  }
+  .buddy-sprite-visible {
+    display: block;
+  }
+</style>

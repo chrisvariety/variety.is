@@ -1,0 +1,346 @@
+---
+import Tabs from "@/components/bearnie/tabs/Tabs.astro";
+import TabsList from "@/components/bearnie/tabs/TabsList.astro";
+import TabsTrigger from "@/components/bearnie/tabs/TabsTrigger.astro";
+import TabsContent from "@/components/bearnie/tabs/TabsContent.astro";
+import BuddyLabel from "./BuddyLabel.astro";
+import BuddySprite from "./BuddySprite.astro";
+
+const triggerClass = [
+  "rounded-none border-b-2 border-transparent px-4 py-2.5 text-xs",
+  "data-[state=active]:border-accent data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:font-semibold",
+].join(" ");
+
+// Base buddy: a common duck with dot eyes and no hat.
+// Each tab varies ONE trait while keeping everything else the same.
+const base = { species: "duck", eye: "\u00B7", hat: "none" };
+
+type Trait = {
+  label: string;
+  description: string;
+  variants: {
+    name: string;
+    species: string;
+    eye: string;
+    hat: string;
+    note: string;
+  }[];
+};
+
+const traits: Trait[] = [
+  {
+    label: "Species",
+    description:
+      "18 species, each with unique ASCII art and 3 animation frames. Purely cosmetic: species doesn\u2019t affect stats.",
+    variants: [
+      {
+        name: "duck",
+        ...base,
+        species: "duck",
+        note: "The OG. Subtle tail wag.",
+      },
+      {
+        name: "goose",
+        ...base,
+        species: "goose",
+        note: "Long neck, menacing energy.",
+      },
+      {
+        name: "blob",
+        ...base,
+        species: "blob",
+        note: "Breathes (expands/contracts).",
+      },
+      {
+        name: "cat",
+        ...base,
+        species: "cat",
+        note: "\u03C9 mouth. Tail flick on frame 2.",
+      },
+      {
+        name: "dragon",
+        ...base,
+        species: "dragon",
+        note: "Smoke puffs on frame 3.",
+      },
+      {
+        name: "octopus",
+        ...base,
+        species: "octopus",
+        note: "Tentacles alternate. Ink bubble on frame 3.",
+      },
+      {
+        name: "owl",
+        ...base,
+        species: "owl",
+        note: "Winks on frame 3. Feet shuffle.",
+      },
+      {
+        name: "penguin",
+        ...base,
+        species: "penguin",
+        note: "Flippers alternate. Hops on frame 3.",
+      },
+      {
+        name: "turtle",
+        ...base,
+        species: "turtle",
+        note: "Shell pattern changes on frame 3.",
+      },
+      {
+        name: "snail",
+        ...base,
+        species: "snail",
+        note: "Eyestalk sways. Single eye species.",
+      },
+      {
+        name: "ghost",
+        ...base,
+        species: "ghost",
+        note: "Bottom edge ripples. Floats up on frame 3.",
+      },
+      {
+        name: "axolotl",
+        ...base,
+        species: "axolotl",
+        note: "Gills wave in alternating directions.",
+      },
+      {
+        name: "capybara",
+        ...base,
+        species: "capybara",
+        note: "Calm. Occasional nostril twitch.",
+      },
+      {
+        name: "cactus",
+        ...base,
+        species: "cactus",
+        note: "Arms move up and down between frames.",
+      },
+      {
+        name: "robot",
+        ...base,
+        species: "robot",
+        note: "Antenna blinks. Mouth pattern shifts.",
+      },
+      {
+        name: "rabbit",
+        ...base,
+        species: "rabbit",
+        note: "Ear droops on frame 2. Nose wiggles.",
+      },
+      {
+        name: "mushroom",
+        ...base,
+        species: "mushroom",
+        note: "Cap spots shift. Spores on frame 3.",
+      },
+      {
+        name: "chonk",
+        ...base,
+        species: "chonk",
+        note: "Ear flick on frame 2. Tail wag on frame 3.",
+      },
+    ],
+  },
+  {
+    label: "Eyes",
+    description:
+      "6 eye styles. Applied via {E} placeholder substitution in the sprite template.",
+    variants: [
+      {
+        name: "\u00B7 dot",
+        ...base,
+        eye: "\u00B7",
+        note: "Default. Minimal, calm.",
+      },
+      {
+        name: "\u2726 star",
+        ...base,
+        eye: "\u2726",
+        note: "Sparkly. Excited energy.",
+      },
+      {
+        name: "\u00D7 cross",
+        ...base,
+        eye: "\u00D7",
+        note: "Dizzy or mischievous.",
+      },
+      {
+        name: "\u25C9 bullseye",
+        ...base,
+        eye: "\u25C9",
+        note: "Wide-eyed. Alert.",
+      },
+      { name: "@ at", ...base, eye: "@", note: "Digital. Robotic feel." },
+      {
+        name: "\u00B0 degree",
+        ...base,
+        eye: "\u00B0",
+        note: "Surprised. Hollow stare.",
+      },
+    ],
+  },
+  {
+    label: "Hats",
+    description:
+      "8 hats. Commons always get \u201Cnone\u201D. Other rarities roll from the full set. Hat replaces the blank top line of the sprite.",
+    variants: [
+      {
+        name: "none",
+        ...base,
+        hat: "none",
+        note: "Common rarity always gets this.",
+      },
+      { name: "crown", ...base, hat: "crown", note: "\\^^^/ \u2014 Regal." },
+      { name: "tophat", ...base, hat: "tophat", note: "[___] \u2014 Classy." },
+      {
+        name: "propeller",
+        ...base,
+        hat: "propeller",
+        note: "-+- \u2014 Playful.",
+      },
+      { name: "halo", ...base, hat: "halo", note: "(   ) \u2014 Angelic." },
+      { name: "wizard", ...base, hat: "wizard", note: "/^\\ \u2014 Magical." },
+      { name: "beanie", ...base, hat: "beanie", note: "(___) \u2014 Cozy." },
+      {
+        name: "tinyduck",
+        ...base,
+        hat: "tinyduck",
+        note: ",> \u2014 A duck on your head.",
+      },
+    ],
+  },
+  {
+    label: "Rarity",
+    description:
+      "Rarity sets the stat floor and determines if hats are possible. Commons never get hats; all other rarities can.",
+    variants: [
+      {
+        name: "common (60%)",
+        ...base,
+        note: "Floor: 5. No hat. Peak stat: 55\u201384.",
+      },
+      {
+        name: "uncommon (25%)",
+        ...base,
+        note: "Floor: 15. Hat possible. Peak: 65\u201394.",
+      },
+      {
+        name: "rare (10%)",
+        ...base,
+        note: "Floor: 25. Hat possible. Peak: 75\u2013100.",
+      },
+      {
+        name: "epic (4%)",
+        ...base,
+        note: "Floor: 35. Hat possible. Peak: 85\u2013100.",
+      },
+      {
+        name: "legendary (1%)",
+        ...base,
+        note: "Floor: 50. Hat possible. Peak: 100.",
+      },
+    ],
+  },
+  {
+    label: "Stats",
+    description:
+      "5 stats are rolled but currently unused: as far as I can tell they don\u2019t affect behavior, visuals, or prompts. Pure bragging rights, like Pokemon IVs that don\u2019t affect battle. Each buddy gets one peak stat and one dump stat.",
+    variants: [
+      {
+        name: "DEBUGGING",
+        ...base,
+        note: "Peak: floor+50 to floor+79. Dump: floor-10 to floor+4.",
+      },
+      {
+        name: "PATIENCE",
+        ...base,
+        note: "Same formula. Just a different slot in the array.",
+      },
+      {
+        name: "CHAOS",
+        ...base,
+        note: "Same formula. The stat names are flavor only.",
+      },
+      {
+        name: "WISDOM",
+        ...base,
+        note: "Same formula. No stat affects any behavior.",
+      },
+      {
+        name: "SNARK",
+        ...base,
+        note: "Same formula. All five stats are cosmetic.",
+      },
+    ],
+  },
+  {
+    label: "Shiny",
+    description:
+      "1% chance, independent of rarity. Like stats, shiny is currently dead code, rolled and stored but never read. No visual difference, no behavior change. A shiny legendary is the rarest possible roll: 0.01% chance.",
+    variants: [
+      {
+        name: "normal (99%)",
+        ...base,
+        note: "Default. No visual difference from shiny.",
+      },
+      {
+        name: "shiny (1%)",
+        ...base,
+        note: "Flagged but unused. Maybe someday\u2026",
+      },
+    ],
+  },
+];
+---
+
+<div
+  class="not-prose my-6 overflow-hidden rounded-lg border border-(--color-muted)/20"
+>
+  <Tabs defaultValue="tab-0">
+    <TabsList
+      class="h-auto w-full justify-start gap-0 overflow-x-auto rounded-none border-b border-(--color-muted)/20 bg-transparent p-0"
+    >
+      {
+        traits.map((_, i) => (
+          <TabsTrigger value={`tab-${i}`} class={triggerClass}>
+            {traits[i]!.label}
+          </TabsTrigger>
+        ))
+      }
+    </TabsList>
+
+    {
+      traits.map((trait, i) => (
+        <TabsContent value={`tab-${i}`} class="mt-0">
+          <p class="border-b border-(--color-muted)/20 bg-(--color-muted)/3 px-5 py-2.5 text-xs text-muted leading-relaxed">
+            {trait.description}
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-px bg-(--color-muted)/10">
+            {trait.variants.map((v, vi) => (
+              <div class="bg-(--bg-color,var(--tw-bg-base,white)) dark:bg-(--color-bg) p-3 flex flex-col items-center gap-2">
+                <div style="color: oklch(65% 0.08 260)">
+                  <BuddySprite
+                    species={v.species}
+                    eye={v.eye}
+                    hat={v.hat}
+                    id={`explorer-${i}-${vi}`}
+                  />
+                </div>
+                <div class="text-center">
+                  <div class="text-xs font-semibold">
+                    <BuddyLabel type={v.name.split(" ")[0]!} />
+                  </div>
+                  <p class="text-[10px] text-muted/60 leading-snug mt-0.5">
+                    {v.note}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
+      ))
+    }
+  </Tabs>
+</div>

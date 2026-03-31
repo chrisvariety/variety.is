@@ -1,0 +1,171 @@
+---
+import BuddyLabel from "./BuddyLabel.astro";
+import BuddySprite from "./BuddySprite.astro";
+
+type Buddy = {
+  uuid: string;
+  species: string;
+  hat: string;
+  eye: string;
+  shiny: boolean;
+  stats: Record<string, number>;
+  score: number;
+};
+
+const buddies: Buddy[] = [
+  { uuid: "3f6c5f24-86f4-4131-b02b-d8f1dd1c36b8", species: "owl", hat: "halo", eye: "@", shiny: true, stats: { debugging: 86, patience: 51, chaos: 80, wisdom: 71, snark: 100 }, score: 16388 },
+  { uuid: "575d0192-5eec-4c6c-829c-c2ea74e52d5e", species: "turtle", hat: "crown", eye: "@", shiny: true, stats: { debugging: 89, patience: 74, chaos: 76, wisdom: 45, snark: 100 }, score: 16384 },
+  { uuid: "41c9d643-7b7f-49c5-b23d-d07700448db9", species: "goose", hat: "beanie", eye: "\u00B0", shiny: true, stats: { debugging: 100, patience: 67, chaos: 41, wisdom: 88, snark: 84 }, score: 16380 },
+  { uuid: "c104cad9-b477-4794-9a72-0dcc528ec4a4", species: "octopus", hat: "none", eye: "\u00D7", shiny: true, stats: { debugging: 60, patience: 45, chaos: 100, wisdom: 88, snark: 79 }, score: 16372 },
+  { uuid: "4b9afb15-f776-4005-a5ea-81c4f0f5f340", species: "duck", hat: "wizard", eye: "\u25C9", shiny: true, stats: { debugging: 88, patience: 61, chaos: 100, wisdom: 68, snark: 50 }, score: 16367 },
+  { uuid: "6b904e07-fd14-44dd-b0bd-861bf40a7c0c", species: "goose", hat: "wizard", eye: "\u2726", shiny: true, stats: { debugging: 65, patience: 83, chaos: 69, wisdom: 49, snark: 100 }, score: 16366 },
+  { uuid: "9664a3ac-6d0a-4d87-aa3d-c0dce6482cca", species: "mushroom", hat: "none", eye: "\u2726", shiny: true, stats: { debugging: 100, patience: 69, chaos: 46, wisdom: 67, snark: 84 }, score: 16366 },
+  { uuid: "6a1f0a5f-6a6c-4a68-bad3-c7eab61970da", species: "octopus", hat: "none", eye: "\u25C9", shiny: true, stats: { debugging: 59, patience: 100, chaos: 66, wisdom: 53, snark: 86 }, score: 16364 },
+  { uuid: "016ad3f9-f7d3-4cb6-a5ef-57d432c8c13d", species: "ghost", hat: "wizard", eye: "\u25C9", shiny: true, stats: { debugging: 70, patience: 58, chaos: 100, wisdom: 89, snark: 46 }, score: 16363 },
+  { uuid: "a3a4eac6-edb8-408b-900e-57b120b19ac4", species: "ghost", hat: "propeller", eye: "\u25C9", shiny: true, stats: { debugging: 66, patience: 61, chaos: 86, wisdom: 100, snark: 45 }, score: 16358 },
+  { uuid: "c43e33a6-b046-4979-a168-544f982af407", species: "goose", hat: "beanie", eye: "@", shiny: true, stats: { debugging: 59, patience: 63, chaos: 100, wisdom: 89, snark: 46 }, score: 16357 },
+  { uuid: "d42f15ca-45b5-40e0-8e67-9de505c2f94e", species: "mushroom", hat: "none", eye: "\u00B7", shiny: true, stats: { debugging: 52, patience: 79, chaos: 78, wisdom: 43, snark: 100 }, score: 16352 },
+  { uuid: "94f690ee-1057-4aa8-830f-a40ba0a128f8", species: "capybara", hat: "crown", eye: "\u25C9", shiny: true, stats: { debugging: 59, patience: 57, chaos: 83, wisdom: 52, snark: 100 }, score: 16351 },
+  { uuid: "d79ecfd9-ab22-403b-b06e-88d3b01c6294", species: "turtle", hat: "halo", eye: "\u00D7", shiny: true, stats: { debugging: 85, patience: 100, chaos: 53, wisdom: 66, snark: 43 }, score: 16347 },
+  { uuid: "417effc7-a0d2-4038-af88-98b01e6d67b0", species: "penguin", hat: "tinyduck", eye: "\u00B7", shiny: true, stats: { debugging: 50, patience: 100, chaos: 78, wisdom: 47, snark: 71 }, score: 16346 },
+  { uuid: "bf9c3bee-5aca-44c2-8ccf-ecca27941f8f", species: "capybara", hat: "wizard", eye: "\u00D7", shiny: true, stats: { debugging: 55, patience: 100, chaos: 72, wisdom: 44, snark: 69 }, score: 16340 },
+  { uuid: "a7b74b5d-383b-4692-9ce8-39ab9c82425e", species: "cat", hat: "halo", eye: "\u2726", shiny: true, stats: { debugging: 100, patience: 78, chaos: 61, wisdom: 50, snark: 51 }, score: 16340 },
+  { uuid: "27a3c548-ba4f-40b1-8492-44b11160989d", species: "snail", hat: "tophat", eye: "\u00D7", shiny: true, stats: { debugging: 73, patience: 50, chaos: 65, wisdom: 100, snark: 48 }, score: 16336 },
+  { uuid: "4fa7dba3-e562-4e1f-a79e-d73c46e928fc", species: "robot", hat: "wizard", eye: "\u00D7", shiny: true, stats: { debugging: 74, patience: 53, chaos: 100, wisdom: 45, snark: 62 }, score: 16334 },
+  { uuid: "40c3e579-c951-404c-b423-9103a05f2313", species: "turtle", hat: "tophat", eye: "\u2726", shiny: true, stats: { debugging: 53, patience: 51, chaos: 100, wisdom: 52, snark: 58 }, score: 16314 },
+];
+
+const statNames = ["debugging", "patience", "chaos", "wisdom", "snark"];
+---
+
+<div class="not-prose my-8">
+  <div class="flex flex-col gap-3">
+    {buddies.map((b, idx) => {
+      const peak = Math.max(...Object.values(b.stats));
+      return (
+        <div class="god-card rounded-lg border border-(--color-muted)/20 bg-(--color-muted)/3 p-4 flex gap-3">
+          <div class="shrink-0 pt-1" style="color: oklch(75% 0.18 85)">
+            <BuddySprite species={b.species} eye={b.eye} hat={b.hat} id={`god-${idx}`} />
+          </div>
+
+          <div class="flex flex-col gap-2 min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-1.5">
+              <span class="flex items-center gap-1.5 text-xs">
+                <BuddyLabel type={b.species} />
+                {b.hat !== "none" && (
+                  <>
+                    <span class="text-muted/30">+</span>
+                    <BuddyLabel type={b.hat} />
+                  </>
+                )}
+              </span>
+              <span class="text-[10px] tracking-wide shrink-0" style="color: oklch(70% 0.18 350)">
+                ✦ shiny
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between text-xs">
+              <span style="color: oklch(75% 0.18 85)">★★★★★</span>
+              <span class="text-muted/50 tabular-nums text-[10px]">#{idx + 1}</span>
+            </div>
+
+            <div class="flex flex-col gap-0.5">
+              {statNames.map((stat) => {
+                const val = b.stats[stat]!;
+                const isPeak = val === peak;
+                return (
+                  <div class="flex items-center gap-1.5 text-xs tabular-nums">
+                    <span
+                      class:list={[
+                        "w-20 text-right uppercase tracking-wide text-[10px]",
+                        isPeak ? "font-bold" : "text-muted/50"
+                      ]}
+                      style={isPeak ? "color: oklch(75% 0.18 85)" : undefined}
+                    >
+                      {stat}
+                    </span>
+                    <div class="flex-1 h-1.5 rounded-full bg-(--color-muted)/10 overflow-hidden">
+                      <div
+                        class="h-full rounded-full"
+                        style={`width: ${val}%; background: ${isPeak ? 'oklch(75% 0.18 85)' : 'var(--color-muted)'}; opacity: ${isPeak ? 1 : 0.3}`}
+                      />
+                    </div>
+                    <span
+                      class:list={[
+                        "w-5 text-right text-[10px]",
+                        isPeak ? "font-bold" : "text-muted/40"
+                      ]}
+                      style={isPeak ? "color: oklch(75% 0.18 85)" : undefined}
+                    >
+                      {val}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              class="uuid-copy flex items-center justify-end gap-1 text-[9px] text-muted/30 hover:text-muted/60 transition-colors leading-none mt-auto cursor-pointer bg-transparent border-none p-0"
+              data-uuid={b.uuid}
+              title="Copy UUID to clipboard"
+            >
+              <code class="break-all text-right">UUID: {b.uuid}</code>
+              <svg class="uuid-icon-copy shrink-0" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg>
+              <svg class="uuid-icon-check shrink-0 hidden" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+            </button>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  function animateBuddySprites() {
+    const sprites = document.querySelectorAll('[data-buddy-sprite]');
+    let tick = 0;
+
+    setInterval(() => {
+      tick++;
+      sprites.forEach((sprite, i) => {
+        const frames = sprite.querySelectorAll('.buddy-sprite-frame');
+        const frame = (tick + i) % frames.length;
+        frames.forEach((el, fi) => {
+          if (fi === frame) {
+            el.classList.remove('buddy-sprite-hidden');
+            el.classList.add('buddy-sprite-visible');
+          } else {
+            el.classList.remove('buddy-sprite-visible');
+            el.classList.add('buddy-sprite-hidden');
+          }
+        });
+      });
+    }, 800);
+  }
+
+  function setupCopyButtons() {
+    document.querySelectorAll('.uuid-copy').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const uuid = btn.getAttribute('data-uuid');
+        if (!uuid) return;
+        await navigator.clipboard.writeText(uuid);
+        const iconCopy = btn.querySelector('.uuid-icon-copy');
+        const iconCheck = btn.querySelector('.uuid-icon-check');
+        iconCopy?.classList.add('hidden');
+        iconCheck?.classList.remove('hidden');
+        setTimeout(() => {
+          iconCopy?.classList.remove('hidden');
+          iconCheck?.classList.add('hidden');
+        }, 2000);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => { animateBuddySprites(); setupCopyButtons(); });
+  } else {
+    animateBuddySprites();
+    setupCopyButtons();
+  }
+</script>

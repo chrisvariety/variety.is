@@ -1,0 +1,66 @@
+---
+interface Props {
+  type: string;
+}
+
+const { type } = Astro.props;
+
+const colors: Record<string, string> = {
+  // Hats
+  none: "var(--color-muted)",
+  crown: "oklch(75% 0.15 85)",
+  tophat: "oklch(55% 0.05 260)",
+  propeller: "oklch(65% 0.15 150)",
+  halo: "oklch(80% 0.12 90)",
+  wizard: "oklch(55% 0.15 300)",
+  beanie: "oklch(60% 0.12 30)",
+  tinyduck: "oklch(80% 0.15 95)",
+
+  // Species
+  duck: "oklch(80% 0.15 95)",
+  goose: "oklch(70% 0.05 90)",
+  blob: "oklch(65% 0.15 150)",
+  cat: "oklch(65% 0.12 50)",
+  dragon: "oklch(60% 0.18 25)",
+  octopus: "oklch(60% 0.15 310)",
+  owl: "oklch(60% 0.08 60)",
+  penguin: "oklch(65% 0.05 240)",
+  turtle: "oklch(60% 0.12 160)",
+  snail: "oklch(65% 0.10 80)",
+  ghost: "oklch(75% 0.08 270)",
+  axolotl: "oklch(70% 0.18 350)",
+  capybara: "oklch(60% 0.08 60)",
+  cactus: "oklch(65% 0.15 145)",
+  robot: "oklch(65% 0.10 240)",
+  rabbit: "oklch(70% 0.12 350)",
+  mushroom: "oklch(60% 0.15 20)",
+  chonk: "oklch(65% 0.12 50)",
+
+  // Eyes
+  "·": "var(--color-muted)",
+  "✦": "oklch(75% 0.15 85)",
+  "×": "oklch(60% 0.15 25)",
+  "◉": "oklch(60% 0.15 150)",
+  "@": "oklch(60% 0.12 240)",
+  "°": "oklch(70% 0.08 200)",
+
+  // Stats
+  debugging: "oklch(60% 0.15 150)",
+  patience: "oklch(65% 0.12 240)",
+  chaos: "oklch(60% 0.18 25)",
+  wisdom: "oklch(65% 0.15 280)",
+  snark: "oklch(65% 0.15 50)",
+
+  // Rarity
+  common: "var(--color-muted)",
+  uncommon: "oklch(65% 0.15 150)",
+  rare: "oklch(60% 0.15 240)",
+  epic: "oklch(60% 0.18 300)",
+  legendary: "oklch(75% 0.18 85)",
+};
+
+const lower = type.toLowerCase();
+const color = colors[lower] ?? "var(--color-muted)";
+---
+
+<span style={`color: ${color}`}>{type}</span>

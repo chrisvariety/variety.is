@@ -1,0 +1,93 @@
+---
+import BuddyLabel from "./BuddyLabel.astro";
+
+type Row = {
+  label: string;
+  items: string[];
+};
+
+const rows: Row[] = [
+  {
+    label: "Hat",
+    items: [
+      "none",
+      "crown",
+      "tophat",
+      "propeller",
+      "halo",
+      "wizard",
+      "beanie",
+      "tinyduck",
+    ],
+  },
+  {
+    label: "Species",
+    items: [
+      "duck",
+      "goose",
+      "blob",
+      "cat",
+      "dragon",
+      "octopus",
+      "owl",
+      "penguin",
+      "turtle",
+      "snail",
+      "ghost",
+      "axolotl",
+      "capybara",
+      "cactus",
+      "robot",
+      "rabbit",
+      "mushroom",
+      "chonk",
+    ],
+  },
+  {
+    label: "Eyes",
+    items: ["·", "✦", "×", "◉", "@", "°"],
+  },
+  {
+    label: "Shiny",
+    items: ["true", "false"],
+  },
+  {
+    label: "Stats",
+    items: ["debugging", "patience", "chaos", "wisdom", "snark"],
+  },
+  {
+    label: "Rarity",
+    items: ["common", "uncommon", "rare", "epic", "legendary"],
+  },
+];
+---
+
+<div
+  class="not-prose my-6 overflow-hidden rounded-lg border border-(--color-muted)/20"
+>
+  <table class="w-full text-sm">
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr class="border-b border-(--color-muted)/10 last:border-b-0">
+            <td class="whitespace-nowrap bg-(--color-muted)/3 px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase w-[1%] border-r border-(--color-muted)/10">
+              {row.label}
+            </td>
+            <td class="px-5 py-2.5">
+              <span class="flex flex-wrap gap-x-1.5 gap-y-1 text-xs">
+                {row.items.map((item, i) => (
+                  <>
+                    <BuddyLabel type={item} />
+                    {i < row.items.length - 1 && (
+                      <span class="text-muted/40">,</span>
+                    )}
+                  </>
+                ))}
+              </span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

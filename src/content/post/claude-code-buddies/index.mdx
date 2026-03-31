@@ -1,0 +1,52 @@
+---
+title: "Finding legendary Claude Code Buddies"
+description: "Breaking down the Claude Code buddies system - April fools 2026"
+publishDate: "31 Mar 2026"
+tags: ["ai", "fiction"]
+---
+
+import BuddySystem from "./BuddySystem.astro";
+import BuddyLabel from "./BuddyLabel.astro";
+import BuddyExplorer from "./BuddyExplorer.astro";
+import GodRolls from "./GodRolls.astro";
+
+When Claude Code first came out there was a little easter egg discoverable by looking through the source on release day: if you asked about swag, a Google Form would pop up. The Claude Code team actually [hand-packed the mailers for the first 1k folks](https://www.threads.com/@boris_cherny/post/DG_bYTJTDgb/claude-code-team-hand-mailing-stickers-to-the-first-1k-people-that-discovered-ou).
+
+Claude Code's [source code was leaked](https://x.com/Fried_rice/status/2038894956459290963) which leads to another easter egg, their April Fools joke this year: a "tamagotchi"-style buddy strangely reminiscent of Figma's April Fools in 2025, [FigPals](https://www.instagram.com/reels/DH6DiB7tB4h/).
+
+Thanks to the source leak, we can reverse engineer how the buddy system works. Let's hunt some ~pokemon~ buddies:
+
+### The Buddy System
+
+Buddies are broken down by rarity, species, eye, hat, shiny, and stats:
+
+<BuddySystem />
+
+Stats and shiny appear to be dead code, rolled but never consumed. Here's what they all actually look like:
+
+<BuddyExplorer />
+
+Your buddy is determined strictly by your userId and a fixed `SALT`:
+
+```typescript
+export function companionUserId(): string {
+  const config = getGlobalConfig();
+  return config.oauthAccount?.accountUuid ?? config.userID ?? "anon";
+}
+
+export function roll(userId: string): Roll {
+  const key = userId + SALT;
+  if (rollCache?.key === key) return rollCache.value;
+  const value = rollFrom(mulberry32(hashString(key)));
+  rollCache = { key, value };
+  return value;
+}
+```
+
+Notice `mulberry32` being used: a 32-bit deterministic pseudo-random number generator. It is not cryptographically secure, but the source indicates it is "good enough for picking ducks". Because it operates in a 32-bit space, there are exactly 2^32 (about 4.29 billion) possible PRNG states, which is trivial for a modern CPU to brute force in seconds. Calling `rollFrom` in a a simple loop to iterate from 0 to 2^32, you can determine seeds that result in legendaries. There's 42,989,564 possible legendaries, which means a 1% chance of your userId being legendary.
+
+### "God" Rolls
+
+Brute-forcing all 2^32 seeds and filtering for legendary + shiny + at least one stat at 100, here are the top 20 god-roll UUIDs. Can you "fake" your `config.oauthAccount?.accountUuid` / `config.userID` in `~/.claude.json` to one of these values to achieve these buddies? We'll find out when the buddy system is actually released tomorrow!
+
+<GodRolls />

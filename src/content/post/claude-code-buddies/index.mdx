@@ -8,6 +8,7 @@ tags: ["ai", "claude code", "easter eggs"]
 import BuddySystem from "./BuddySystem.astro";
 import BuddyLabel from "./BuddyLabel.astro";
 import BuddyExplorer from "./BuddyExplorer.astro";
+import BuddyPicker from "./BuddyPicker.astro";
 import GodRolls from "./GodRolls.astro";
 import BuddyNames from "./BuddyNames.astro";
 
@@ -86,7 +87,7 @@ If the API call fails, it falls back to one of 6 hardcoded default names. Here's
 
 ### Unlocking your "God" roll
 
-You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accountUuid` to any of the god-roll UUIDs above and restart Claude Code — your new shiny legendary will appear. Since names and personalities are LLM-generated (not deterministic), they're stored in a separate `companion` section of the config that you can also customize:
+You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accountUuid` to any of the god-roll UUIDs above (or generate one with the picker below) and restart Claude Code. Since names and personalities are LLM-generated (not deterministic), they're stored in a separate `companion` section of the config that you can also customize:
 
 ```json
 {
@@ -103,3 +104,9 @@ You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accoun
 So go ahead, unlock your shiny wizard axolotl, give it whatever name you want, and let it judge your code.
 
 ![Claude Code buddy example](/claude/claude-buddy-example.png)
+
+### Build your own
+
+Don't want a pre-rolled god tier? Pick your ideal species, eyes, hat, rarity, and shiny. We'll brute-force a random v4 UUID to find one that rolls your exact combo:
+
+<BuddyPicker />

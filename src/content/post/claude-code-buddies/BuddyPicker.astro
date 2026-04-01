@@ -1,0 +1,491 @@
+---
+const SPECIES = ["duck","goose","blob","cat","dragon","octopus","owl","penguin","turtle","snail","ghost","axolotl","capybara","cactus","robot","rabbit","mushroom","chonk"];
+const EYES = ["\u00B7","\u2726","\u00D7","\u25C9","@","\u00B0"];
+const HATS = ["none","crown","tophat","propeller","halo","wizard","beanie","tinyduck"];
+const RARITIES = ["common","uncommon","rare","epic","legendary"];
+
+const speciesColors: Record<string, string> = {
+  duck: "oklch(80% 0.15 95)", goose: "oklch(70% 0.05 90)", blob: "oklch(65% 0.15 150)",
+  cat: "oklch(65% 0.12 50)", dragon: "oklch(60% 0.18 25)", octopus: "oklch(60% 0.15 310)",
+  owl: "oklch(60% 0.08 60)", penguin: "oklch(65% 0.05 240)", turtle: "oklch(60% 0.12 160)",
+  snail: "oklch(65% 0.10 80)", ghost: "oklch(75% 0.08 270)", axolotl: "oklch(70% 0.18 350)",
+  capybara: "oklch(60% 0.08 60)", cactus: "oklch(65% 0.15 145)", robot: "oklch(65% 0.10 240)",
+  rabbit: "oklch(70% 0.12 350)", mushroom: "oklch(60% 0.15 20)", chonk: "oklch(65% 0.12 50)",
+};
+const hatColors: Record<string, string> = {
+  none: "var(--color-muted)", crown: "oklch(75% 0.15 85)", tophat: "oklch(55% 0.05 260)",
+  propeller: "oklch(65% 0.15 150)", halo: "oklch(80% 0.12 90)", wizard: "oklch(55% 0.15 300)",
+  beanie: "oklch(60% 0.12 30)", tinyduck: "oklch(80% 0.15 95)",
+};
+const rarityColors: Record<string, string> = {
+  common: "var(--color-muted)", uncommon: "oklch(65% 0.15 150)",
+  rare: "oklch(60% 0.15 240)", epic: "oklch(60% 0.18 300)", legendary: "oklch(75% 0.18 85)",
+};
+const rarityStars: Record<string, string> = {
+  common: "\u2605", uncommon: "\u2605\u2605", rare: "\u2605\u2605\u2605", epic: "\u2605\u2605\u2605\u2605", legendary: "\u2605\u2605\u2605\u2605\u2605",
+};
+---
+
+<div class="not-prose my-8 rounded-lg border border-(--color-muted)/20 overflow-hidden" id="buddy-picker">
+  {/* Trait selectors */}
+  <div class="border-b border-(--color-muted)/10 bg-(--color-muted)/3 px-5 py-3">
+    <span class="text-xs font-semibold uppercase tracking-wide text-muted">Build your buddy</span>
+  </div>
+
+  {/* Rarity */}
+  <div class="border-b border-(--color-muted)/10 px-5 py-3">
+    <div class="text-[10px] font-semibold uppercase tracking-wide text-muted/50 mb-1.5">Rarity</div>
+    <div class="flex flex-wrap gap-1.5" id="pick-rarity">
+      {RARITIES.map((r) => (
+        <button
+          data-value={r}
+          class="picker-btn px-2.5 py-1 rounded text-xs border border-(--color-muted)/20 transition-all cursor-pointer"
+          style={`color: ${rarityColors[r]}`}
+        >
+          {rarityStars[r]} {r}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Species */}
+  <div class="border-b border-(--color-muted)/10 px-5 py-3">
+    <div class="text-[10px] font-semibold uppercase tracking-wide text-muted/50 mb-1.5">Species</div>
+    <div class="flex flex-wrap gap-1.5" id="pick-species">
+      {SPECIES.map((s) => (
+        <button
+          data-value={s}
+          class="picker-btn px-2.5 py-1 rounded text-xs border border-(--color-muted)/20 transition-all cursor-pointer"
+          style={`color: ${speciesColors[s]}`}
+        >
+          {s}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Eyes */}
+  <div class="border-b border-(--color-muted)/10 px-5 py-3">
+    <div class="text-[10px] font-semibold uppercase tracking-wide text-muted/50 mb-1.5">Eyes</div>
+    <div class="flex flex-wrap gap-1.5" id="pick-eye">
+      {EYES.map((e) => (
+        <button
+          data-value={e}
+          class="picker-btn px-3 py-1 rounded text-sm border border-(--color-muted)/20 transition-all cursor-pointer font-mono"
+        >
+          {e}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Hats */}
+  <div class="border-b border-(--color-muted)/10 px-5 py-3" id="hat-section">
+    <div class="text-[10px] font-semibold uppercase tracking-wide text-muted/50 mb-1.5">Hat <span id="hat-note" class="font-normal normal-case hidden">(commons don't get hats)</span></div>
+    <div class="flex flex-wrap gap-1.5" id="pick-hat">
+      {HATS.map((h) => (
+        <button
+          data-value={h}
+          class="picker-btn px-2.5 py-1 rounded text-xs border border-(--color-muted)/20 transition-all cursor-pointer"
+          style={`color: ${hatColors[h]}`}
+        >
+          {h}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Shiny toggle */}
+  <div class="border-b border-(--color-muted)/10 px-5 py-3">
+    <div class="text-[10px] font-semibold uppercase tracking-wide text-muted/50 mb-1.5">Shiny</div>
+    <div class="flex gap-1.5" id="pick-shiny">
+      <button data-value="false" class="picker-btn px-2.5 py-1 rounded text-xs border border-(--color-muted)/20 transition-all cursor-pointer">normal</button>
+      <button data-value="true" class="picker-btn px-2.5 py-1 rounded text-xs border border-(--color-muted)/20 transition-all cursor-pointer" style="color: oklch(70% 0.18 350)">✦ shiny</button>
+    </div>
+  </div>
+
+  {/* Preview + Result */}
+  <div class="flex flex-col sm:flex-row items-start gap-4 px-5 py-4">
+    {/* Live preview sprite - fully managed by JS */}
+    <div class="shrink-0" id="picker-preview" style="color: oklch(65% 0.08 260)">
+      <div data-buddy-sprite="picker-sprite"></div>
+    </div>
+
+    <div class="flex-1 min-w-0 flex flex-col gap-3">
+      {/* Stats display */}
+      <div class="flex flex-col gap-0.5" id="picker-stats"></div>
+
+      {/* UUID output */}
+      <div class="flex items-center gap-2">
+        <code id="picker-uuid" class="text-xs text-muted/60 break-all flex-1 select-all">click a trait to start</code>
+        <button id="picker-copy" class="shrink-0 px-2.5 py-1 rounded text-[10px] border border-(--color-muted)/20 text-muted/50 cursor-pointer transition-all hover:border-(--color-muted)/40 hidden">
+          copy
+        </button>
+        <button id="picker-reroll" class="shrink-0 px-2.5 py-1 rounded text-[10px] border border-(--color-muted)/20 text-muted/50 cursor-pointer transition-all hover:border-(--color-muted)/40 hidden" title="Find a different UUID">
+          reroll
+        </button>
+      </div>
+      <div id="picker-status" class="text-[10px] text-muted/40"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .picker-btn[data-active="true"] {
+    border-color: currentColor;
+    background: color-mix(in oklch, currentColor 10%, transparent);
+    font-weight: 600;
+  }
+  .picker-btn:hover:not([data-active="true"]):not(:disabled) {
+    border-color: color-mix(in oklch, currentColor 40%, transparent);
+    background: color-mix(in oklch, currentColor 5%, transparent);
+  }
+  .picker-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+  :global(#picker-preview .buddy-sprite-hidden) {
+    display: none;
+  }
+  :global(#picker-preview .buddy-sprite-visible) {
+    display: block;
+  }
+</style>
+
+<script>
+  // --- Rolling logic (ported from companion.ts) ---
+  const SALT = 'friend-2026-401';
+  const SPECIES = ["duck","goose","blob","cat","dragon","octopus","owl","penguin","turtle","snail","ghost","axolotl","capybara","cactus","robot","rabbit","mushroom","chonk"];
+  const EYES = ["\u00B7","\u2726","\u00D7","\u25C9","@","\u00B0"];
+  const HATS = ["none","crown","tophat","propeller","halo","wizard","beanie","tinyduck"];
+  const RARITIES = ["common","uncommon","rare","epic","legendary"];
+  const RARITY_WEIGHTS: Record<string, number> = { common: 60, uncommon: 25, rare: 10, epic: 4, legendary: 1 };
+  const RARITY_FLOOR: Record<string, number> = { common: 5, uncommon: 15, rare: 25, epic: 35, legendary: 50 };
+  const STAT_NAMES = ["DEBUGGING","PATIENCE","CHAOS","WISDOM","SNARK"];
+
+  function mulberry32(seed: number): () => number {
+    let a = seed >>> 0;
+    return function () {
+      a |= 0;
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function hashString(s: string): number {
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function pick<T>(rng: () => number, arr: readonly T[]): T {
+    return arr[Math.floor(rng() * arr.length)]!;
+  }
+
+  function rollRarity(rng: () => number): string {
+    const total = Object.values(RARITY_WEIGHTS).reduce((a, b) => a + b, 0);
+    let roll = rng() * total;
+    for (const rarity of RARITIES) {
+      roll -= RARITY_WEIGHTS[rarity]!;
+      if (roll < 0) return rarity;
+    }
+    return 'common';
+  }
+
+  type Bones = { rarity: string; species: string; eye: string; hat: string; shiny: boolean; stats: Record<string, number> };
+
+  function rollFrom(rng: () => number): Bones {
+    const rarity = rollRarity(rng);
+    const species = pick(rng, SPECIES);
+    const eye = pick(rng, EYES);
+    const hat = rarity === 'common' ? 'none' : pick(rng, HATS);
+    const shiny = rng() < 0.01;
+
+    const floor = RARITY_FLOOR[rarity]!;
+    const peak = pick(rng, STAT_NAMES);
+    let dump = pick(rng, STAT_NAMES);
+    while (dump === peak) dump = pick(rng, STAT_NAMES);
+    const stats: Record<string, number> = {};
+    for (const name of STAT_NAMES) {
+      if (name === peak) stats[name] = Math.min(100, floor + 50 + Math.floor(rng() * 30));
+      else if (name === dump) stats[name] = Math.max(1, floor - 10 + Math.floor(rng() * 15));
+      else stats[name] = floor + Math.floor(rng() * 40);
+    }
+    return { rarity, species, eye, hat, shiny, stats };
+  }
+
+  function rollUuid(uuid: string): Bones {
+    return rollFrom(mulberry32(hashString(uuid + SALT)));
+  }
+
+  // --- UUID v4 generator ---
+  function randomUuidV4(): string {
+    const h = '0123456789abcdef';
+    const b = crypto.getRandomValues(new Uint8Array(16));
+    b[6] = (b[6]! & 0x0f) | 0x40;
+    b[8] = (b[8]! & 0x3f) | 0x80;
+    let s = '';
+    for (let i = 0; i < 16; i++) {
+      if (i === 4 || i === 6 || i === 8 || i === 10) s += '-';
+      s += h[b[i]! >> 4]! + h[b[i]! & 0xf]!;
+    }
+    return s;
+  }
+
+  // --- Sprite rendering (for live preview) ---
+  const E = "{E}";
+  const BODIES: Record<string, string[][]> = {
+    duck:[['            ','    __      ',`  <(${E} )___  `,'   (  ._>   ','    `--\u00B4    '],['            ','    __      ',`  <(${E} )___  `,'   (  ._>   ','    `--\u00B4~   '],['            ','    __      ',`  <(${E} )___  `,'   (  .__>  ','    `--\u00B4    ']],
+    goose:[['            ',`     (${E}>    `,'     ||     ','   _(__)_   ','    ^^^^    '],['            ',`    (${E}>     `,'     ||     ','   _(__)_   ','    ^^^^    '],['            ',`     (${E}>>   `,'     ||     ','   _(__)_   ','    ^^^^    ']],
+    blob:[['            ','   .----.   ',`  ( ${E}  ${E} )  `,'  (      )  ','   `----\u00B4   '],['            ','  .------.  ',` (  ${E}  ${E}  ) `,' (        ) ','  `------\u00B4  '],['            ','    .--.    ',`   (${E}  ${E})   `,'   (    )   ','    `--\u00B4    ']],
+    cat:[['            ','   /\\_/\\    ',`  ( ${E}   ${E})  `,'  (  \u03C9  )   ','  (")_(")   '],['            ','   /\\_/\\    ',`  ( ${E}   ${E})  `,'  (  \u03C9  )   ','  (")_(")~  '],['            ','   /\\-/\\    ',`  ( ${E}   ${E})  `,'  (  \u03C9  )   ','  (")_(")   ']],
+    dragon:[['            ','  /^\\  /^\\  ',` <  ${E}  ${E}  > `,' (   ~~   ) ','  `-vvvv-\u00B4  '],['            ','  /^\\  /^\\  ',` <  ${E}  ${E}  > `,' (        ) ','  `-vvvv-\u00B4  '],['   ~    ~   ','  /^\\  /^\\  ',` <  ${E}  ${E}  > `,' (   ~~   ) ','  `-vvvv-\u00B4  ']],
+    octopus:[['            ','   .----.   ',`  ( ${E}  ${E} )  `,'  (______)  ','  /\\/\\/\\/\\  '],['            ','   .----.   ',`  ( ${E}  ${E} )  `,'  (______)  ','  \\/\\/\\/\\/  '],['     o      ','   .----.   ',`  ( ${E}  ${E} )  `,'  (______)  ','  /\\/\\/\\/\\  ']],
+    owl:[['            ','   /\\  /\\   ',`  ((${E})(${E}))  `,'  (  ><  )  ','   `----\u00B4   '],['            ','   /\\  /\\   ',`  ((${E})(${E}))  `,'  (  ><  )  ','   .----.   '],['            ','   /\\  /\\   ',`  ((${E})(-))  `,'  (  ><  )  ','   `----\u00B4   ']],
+    penguin:[['            ','  .---.     ',`  (${E}>${E})     `,' /(   )\\    ','  `---\u00B4     '],['            ','  .---.     ',`  (${E}>${E})     `,' |(   )|    ','  `---\u00B4     '],['  .---.     ',`  (${E}>${E})     `,' /(   )\\    ','  `---\u00B4     ','   ~ ~      ']],
+    turtle:[['            ','   _,--._   ',`  ( ${E}  ${E} )  `,' /[______]\\ ','  ``    ``  '],['            ','   _,--._   ',`  ( ${E}  ${E} )  `,' /[______]\\ ','   ``  ``   '],['            ','   _,--._   ',`  ( ${E}  ${E} )  `,' /[======]\\ ','  ``    ``  ']],
+    snail:[['            ',` ${E}    .--.  `,'  \\  ( @ )  ','   \\_`--\u00B4   ','  ~~~~~~~   '],['            ',`  ${E}   .--.  `,'  |  ( @ )  ','   \\_`--\u00B4   ','  ~~~~~~~   '],['            ',` ${E}    .--.  `,'  \\  ( @  ) ','   \\_`--\u00B4   ','   ~~~~~~   ']],
+    ghost:[['            ','   .----.   ',`  / ${E}  ${E} \\  `,'  |      |  ','  ~`~``~`~  '],['            ','   .----.   ',`  / ${E}  ${E} \\  `,'  |      |  ','  `~`~~`~`  '],['    ~  ~    ','   .----.   ',`  / ${E}  ${E} \\  `,'  |      |  ','  ~~`~~`~~  ']],
+    axolotl:[['            ','}~(______)~{',`}~(${E} .. ${E})~{`,'  ( .--. )  ','  (_/  \\_)  '],['            ','~}(______){~',`~}(${E} .. ${E}){~`,'  ( .--. )  ','  (_/  \\_)  '],['            ','}~(______)~{',`}~(${E} .. ${E})~{`,'  (  --  )  ','  ~_/  \\_~  ']],
+    capybara:[['            ','  n______n  ',` ( ${E}    ${E} ) `,' (   oo   ) ','  `------\u00B4  '],['            ','  n______n  ',` ( ${E}    ${E} ) `,' (   Oo   ) ','  `------\u00B4  '],['    ~  ~    ','  u______n  ',` ( ${E}    ${E} ) `,' (   oo   ) ','  `------\u00B4  ']],
+    cactus:[['            ',' n  ____  n ',` | |${E}  ${E}| | `,' |_|    |_| ','   |    |   '],['            ','    ____    ',` n |${E}  ${E}| n `,' |_|    |_| ','   |    |   '],[' n        n ',' |  ____  | ',` | |${E}  ${E}| | `,' |_|    |_| ','   |    |   ']],
+    robot:[['            ','   .[||].   ',`  [ ${E}  ${E} ]  `,'  [ ==== ]  ','  `------\u00B4  '],['            ','   .[||].   ',`  [ ${E}  ${E} ]  `,'  [ -==- ]  ','  `------\u00B4  '],['     *      ','   .[||].   ',`  [ ${E}  ${E} ]  `,'  [ ==== ]  ','  `------\u00B4  ']],
+    rabbit:[['            ','   (\\__/)   ',`  ( ${E}  ${E} )  `,' =(  ..  )= ','  (")__(")  '],['            ','   (|__/)   ',`  ( ${E}  ${E} )  `,' =(  ..  )= ','  (")__(")  '],['            ','   (\\__/)   ',`  ( ${E}  ${E} )  `,' =( .  . )= ','  (")__(")  ']],
+    mushroom:[['            ',' .-o-OO-o-. ','(__________)',`   |${E}  ${E}|   `,'   |____|   '],['            ',' .-O-oo-O-. ','(__________)',`   |${E}  ${E}|   `,'   |____|   '],['   . o  .   ',' .-o-OO-o-. ','(__________)',`   |${E}  ${E}|   `,'   |____|   ']],
+    chonk:[['            ','  /\\    /\\  ',` ( ${E}    ${E} ) `,' (   ..   ) ','  `------\u00B4  '],['            ','  /\\    /|  ',` ( ${E}    ${E} ) `,' (   ..   ) ','  `------\u00B4  '],['            ','  /\\    /\\  ',` ( ${E}    ${E} ) `,' (   ..   ) ','  `------\u00B4~ ']],
+  };
+  const HAT_LINES: Record<string, string> = {
+    none:'', crown:'   \\^^^/    ', tophat:'   [___]    ', propeller:'    -+-     ',
+    halo:'   (   )    ', wizard:'    /^\\     ', beanie:'   (___)    ', tinyduck:'    ,>      ',
+  };
+
+  function renderSprite(sp: string, ey: string, h: string, frame: number): string[] {
+    const frames = BODIES[sp]!;
+    const body = frames[frame % frames.length]!.map(l => l.replaceAll('{E}', ey));
+    const lines = [...body];
+    if (h !== 'none' && !lines[0]!.trim()) lines[0] = HAT_LINES[h]!;
+    if (!lines[0]!.trim() && frames.every(f => !f[0]!.trim())) lines.shift();
+    return lines;
+  }
+
+  // --- Picker state ---
+  const state = {
+    rarity: 'legendary',
+    species: 'duck',
+    eye: '\u00B7',
+    hat: 'none',
+    shiny: false,
+  };
+
+  let currentUuid = '';
+  let searching = false;
+  let searchAbort: (() => void) | null = null;
+
+  function initPicker() {
+    const container = document.getElementById('buddy-picker')!;
+
+    // Wire up all picker groups
+    for (const [key, groupId] of [['rarity','pick-rarity'],['species','pick-species'],['eye','pick-eye'],['hat','pick-hat'],['shiny','pick-shiny']] as const) {
+      const group = document.getElementById(groupId)!;
+      group.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest('button[data-value]') as HTMLButtonElement | null;
+        if (!btn || btn.disabled) return;
+        const val = btn.dataset.value!;
+        if (key === 'shiny') {
+          (state as any)[key] = val === 'true';
+        } else {
+          (state as any)[key] = val;
+        }
+        // Common forces hat to none
+        if (key === 'rarity' && val === 'common') {
+          state.hat = 'none';
+        }
+        updateUI();
+        findUuid();
+      });
+    }
+
+    // Set initial active states
+    updateUI();
+    findUuid();
+  }
+
+  function updateUI() {
+    // Update active buttons
+    for (const [key, groupId] of [['rarity','pick-rarity'],['species','pick-species'],['eye','pick-eye'],['hat','pick-hat'],['shiny','pick-shiny']] as const) {
+      const group = document.getElementById(groupId)!;
+      const val = key === 'shiny' ? String(state.shiny) : (state as any)[key];
+      for (const btn of group.querySelectorAll<HTMLButtonElement>('button[data-value]')) {
+        btn.dataset.active = String(btn.dataset.value === val);
+      }
+    }
+
+    // Disable hat buttons for common
+    const hatGroup = document.getElementById('pick-hat')!;
+    const hatNote = document.getElementById('hat-note')!;
+    const isCommon = state.rarity === 'common';
+    hatNote.classList.toggle('hidden', !isCommon);
+    for (const btn of hatGroup.querySelectorAll<HTMLButtonElement>('button')) {
+      btn.disabled = isCommon && btn.dataset.value !== 'none';
+    }
+
+    // Update preview sprite
+    updateSpritePreview();
+  }
+
+  let pickerAnimFrame = 0;
+  let pickerAnimInterval: ReturnType<typeof setInterval> | null = null;
+
+  function startPickerAnimation() {
+    if (pickerAnimInterval) clearInterval(pickerAnimInterval);
+    pickerAnimFrame = 0;
+    pickerAnimInterval = setInterval(() => {
+      pickerAnimFrame++;
+      const container = document.querySelector('#picker-preview [data-buddy-sprite]');
+      if (!container) return;
+      const frames = container.querySelectorAll('.buddy-sprite-frame');
+      const fi = pickerAnimFrame % frames.length;
+      frames.forEach((el, i) => {
+        if (i === fi) {
+          el.classList.remove('buddy-sprite-hidden');
+          el.classList.add('buddy-sprite-visible');
+        } else {
+          el.classList.remove('buddy-sprite-visible');
+          el.classList.add('buddy-sprite-hidden');
+        }
+      });
+    }, 800);
+  }
+
+  function updateSpritePreview() {
+    const preview = document.getElementById('picker-preview')!;
+    const spriteContainer = preview.querySelector('[data-buddy-sprite]')!;
+    const frameCount = BODIES[state.species]?.length ?? 3;
+    spriteContainer.innerHTML = '';
+    for (let fi = 0; fi < frameCount; fi++) {
+      const lines = renderSprite(state.species, state.eye, state.hat, fi);
+      const pre = document.createElement('pre');
+      pre.className = `buddy-sprite-frame leading-[1.15] text-[10px] sm:text-xs ${fi === 0 ? 'buddy-sprite-visible' : 'buddy-sprite-hidden'}`;
+      pre.dataset.frame = String(fi);
+      pre.style.cssText = "font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace; margin: 0; white-space: pre;";
+      pre.textContent = lines.join('\n');
+      spriteContainer.appendChild(pre);
+    }
+
+    const rarityColor: Record<string, string> = {
+      common: 'oklch(55% 0.03 260)', uncommon: 'oklch(65% 0.15 150)',
+      rare: 'oklch(60% 0.15 240)', epic: 'oklch(60% 0.18 300)', legendary: 'oklch(75% 0.18 85)',
+    };
+    preview.style.color = rarityColor[state.rarity] ?? 'oklch(65% 0.08 260)';
+
+    // Restart animation so it picks up the new DOM elements
+    startPickerAnimation();
+  }
+
+  function updateStats(bones: Bones) {
+    const container = document.getElementById('picker-stats')!;
+    const peak = Math.max(...Object.values(bones.stats));
+    const statColors: Record<string, string> = {
+      DEBUGGING: 'oklch(60% 0.15 150)', PATIENCE: 'oklch(65% 0.12 240)',
+      CHAOS: 'oklch(60% 0.18 25)', WISDOM: 'oklch(65% 0.15 280)', SNARK: 'oklch(65% 0.15 50)',
+    };
+    container.innerHTML = STAT_NAMES.map(name => {
+      const val = bones.stats[name] ?? 0;
+      const isPeak = val === peak;
+      const color = isPeak ? 'oklch(75% 0.18 85)' : 'var(--color-muted)';
+      return `<div class="flex items-center gap-1.5 text-xs tabular-nums">
+        <span class="w-10 text-right uppercase tracking-wide text-[9px] ${isPeak ? 'font-bold' : 'text-muted/50'}" ${isPeak ? `style="color: oklch(75% 0.18 85)"` : ''}>
+          ${name.slice(0, 3)}
+        </span>
+        <div class="flex-1 h-1.5 rounded-full overflow-hidden" style="background: color-mix(in oklch, var(--color-muted) 10%, transparent)">
+          <div class="h-full rounded-full" style="width: ${val}%; background: ${color}; opacity: ${isPeak ? 1 : 0.3}"></div>
+        </div>
+        <span class="w-5 text-right text-[10px] ${isPeak ? 'font-bold' : 'text-muted/40'}" ${isPeak ? `style="color: oklch(75% 0.18 85)"` : ''}>${val}</span>
+      </div>`;
+    }).join('');
+  }
+
+  async function findUuid() {
+    // Abort any previous search
+    if (searchAbort) { searchAbort(); searchAbort = null; }
+
+    const uuidEl = document.getElementById('picker-uuid')!;
+    const statusEl = document.getElementById('picker-status')!;
+    const copyBtn = document.getElementById('picker-copy')!;
+    const rerollBtn = document.getElementById('picker-reroll')!;
+
+    uuidEl.textContent = 'searching\u2026';
+    statusEl.textContent = '';
+    copyBtn.classList.add('hidden');
+    rerollBtn.classList.add('hidden');
+
+    const target = { ...state };
+    let aborted = false;
+    searchAbort = () => { aborted = true; };
+
+    // Search in batches to keep UI responsive
+    const BATCH = 50_000;
+    let tried = 0;
+
+    function searchBatch(): boolean {
+      for (let i = 0; i < BATCH; i++) {
+        if (aborted) return true;
+        const uuid = randomUuidV4();
+        const bones = rollUuid(uuid);
+        if (
+          bones.rarity === target.rarity &&
+          bones.species === target.species &&
+          bones.eye === target.eye &&
+          bones.hat === target.hat &&
+          bones.shiny === target.shiny
+        ) {
+          currentUuid = uuid;
+          uuidEl.textContent = uuid;
+          statusEl.textContent = `found after ${(tried + i + 1).toLocaleString()} UUIDs`;
+          copyBtn.classList.remove('hidden');
+          rerollBtn.classList.remove('hidden');
+          updateStats(bones);
+          return true;
+        }
+      }
+      tried += BATCH;
+      statusEl.textContent = `searched ${tried.toLocaleString()} UUIDs\u2026`;
+      return false;
+    }
+
+    function loop() {
+      if (aborted) return;
+      if (!searchBatch()) {
+        requestAnimationFrame(loop);
+      }
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  // --- Copy button ---
+  document.getElementById('picker-copy')?.addEventListener('click', async () => {
+    if (!currentUuid) return;
+    await navigator.clipboard.writeText(currentUuid);
+    const btn = document.getElementById('picker-copy')!;
+    btn.textContent = 'copied!';
+    setTimeout(() => { btn.textContent = 'copy'; }, 1500);
+  });
+
+  // --- Reroll button ---
+  document.getElementById('picker-reroll')?.addEventListener('click', () => {
+    findUuid();
+  });
+
+  // --- Init ---
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPicker);
+  } else {
+    initPicker();
+  }
+</script>

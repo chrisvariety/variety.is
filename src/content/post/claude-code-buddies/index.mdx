@@ -87,7 +87,9 @@ If the API call fails, it falls back to one of 6 hardcoded default names. Here's
 
 ### Unlocking your "God" roll
 
-You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accountUuid` to any of the god-roll UUIDs above (or generate one with the picker below) and restart Claude Code. Since names and personalities are LLM-generated (not deterministic), they're stored in a separate `companion` section of the config that you can also customize:
+You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accountUuid` to any of the god-roll UUIDs above (or generate one with the picker below) and restart Claude Code. And if you're worried: as far as I can tell, changing your `oauthAccount.accountUuid` has no negative effect on how Claude Code operates, but it doesn't hurt to capture a backup first.
+
+Since names and personalities are LLM-generated (not deterministic), they're stored in a separate `companion` section of the config that you can also customize:
 
 ```json
 {
@@ -107,6 +109,6 @@ So go ahead, unlock your shiny wizard axolotl, give it whatever name you want, a
 
 ### Build your own
 
-Don't want a pre-rolled god tier? Pick your ideal species, eyes, hat, rarity, and shiny. We'll brute-force a random v4 UUID to find one that rolls your exact combo:
+Don't want a pre-rolled "god" tier? Use the picker below to choose your ideal species, eyes, hat, rarity, and shiny. We'll brute-force a random v4 UUID to find one that rolls your exact combo, right in your browser:
 
 <BuddyPicker />

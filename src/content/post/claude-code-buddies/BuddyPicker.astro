@@ -174,13 +174,70 @@ const rarityStars: Record<string, string> = {
     };
   }
 
-  function hashString(s: string): number {
-    let h = 2166136261;
-    for (let i = 0; i < s.length; i++) {
-      h ^= s.charCodeAt(i);
-      h = Math.imul(h, 16777619);
+  // --- wyhash (Zig stdlib variant used by Bun.hash) ---
+  // Claude Code ships as a Bun binary, so hashString uses Bun.hash (wyhash),
+  // NOT the FNV-1a fallback. Ported from @pencroff-lab/wyhash-ts.
+  const _ws = [0xa0761d6478bd642fn, 0xe7037ed1a0b428dbn, 0x8ebc6af09c88c6e3n, 0x589965cc75374cc3n];
+  function _wymum(a: bigint, b: bigint): [bigint, bigint] {
+    const x = a * b;
+    return [BigInt.asUintN(64, x), BigInt.asUintN(64, x >> 64n)];
+  }
+  function _wymix(a: bigint, b: bigint): bigint {
+    const [lo, hi] = _wymum(a, b);
+    return lo ^ hi;
+  }
+  function _wyrd(d: Uint8Array, o: number, n: number): bigint {
+    let r = 0n;
+    for (let i = 0; i < n && o + i < d.length; i++) r |= BigInt(d[o + i]!) << (BigInt(i) * 8n);
+    return BigInt.asUintN(64, r);
+  }
+  function _wyr8s(d: Uint8Array, o: number): bigint {
+    return (_wyrd(d, o, 4) << 32n) | _wyrd(d, o + 4, 4);
+  }
+  function wyhash(str: string): bigint {
+    const input = new TextEncoder().encode(str);
+    const len = input.length;
+    let a: bigint, b: bigint;
+    let s0 = 0n ^ _wymix(0n ^ _ws[0]!, _ws[1]!);
+    if (len <= 16) {
+      if (len >= 4) {
+        const q = (len >> 3) << 2;
+        a = (_wyrd(input, 0, 4) << 32n) | _wyrd(input, q, 4);
+        b = (_wyrd(input, len - 4, 4) << 32n) | _wyrd(input, len - 4 - q, 4);
+      } else if (len > 0) {
+        a = (BigInt(input[0]!) << 16n) | (BigInt(input[len >> 1]!) << 8n) | BigInt(input[len - 1]!);
+        b = 0n;
+      } else { a = 0n; b = 0n; }
+    } else {
+      const state: bigint[] = [s0, s0, s0];
+      let i = 0;
+      if (len >= 48) {
+        while (i + 48 < len) {
+          for (let j = 0; j < 3; j++) {
+            state[j] = _wymix(_wyrd(input, i + 16 * j, 8) ^ _ws[j + 1]!, _wyrd(input, i + 16 * j + 8, 8) ^ state[j]!);
+          }
+          i += 48;
+        }
+        state[0] = (state[0]! ^ state[1]! ^ state[2]!) & BigInt.asUintN(64, -1n);
+      }
+      const rem = input.subarray(i);
+      let k = 0;
+      while (k + 16 < rem.length) {
+        state[0] = _wymix(_wyrd(rem, k, 8) ^ _ws[1]!, _wyrd(rem, k + 8, 8) ^ state[0]!);
+        k += 16;
+      }
+      a = _wyrd(input, len - 16, 8);
+      b = _wyrd(input, len - 8, 8);
+      s0 = state[0]!;
     }
-    return h >>> 0;
+    a ^= _ws[1]!;
+    b ^= s0;
+    [a, b] = _wymum(a, b);
+    return _wymix(a ^ _ws[0]! ^ BigInt(len), b ^ _ws[1]!);
+  }
+
+  function hashString(s: string): number {
+    return Number(wyhash(s) & 0xffffffffn);
   }
 
   function pick<T>(rng: () => number, arr: readonly T[]): T {
@@ -423,7 +480,8 @@ const rarityStars: Record<string, string> = {
     searchAbort = () => { aborted = true; };
 
     // Search in batches to keep UI responsive
-    const BATCH = 50_000;
+    // BigInt wyhash is ~10x slower than FNV-1a, so smaller batches
+    const BATCH = 5_000;
     let tried = 0;
 
     function searchBatch(): boolean {

@@ -9,7 +9,6 @@ import BuddySystem from "./BuddySystem.astro";
 import BuddyLabel from "./BuddyLabel.astro";
 import BuddyExplorer from "./BuddyExplorer.astro";
 import BuddyPicker from "./BuddyPicker.astro";
-import GodRolls from "./GodRolls.astro";
 import BuddyNames from "./BuddyNames.astro";
 
 When Claude Code first came out there was a little easter egg discoverable by looking through the source on release day: if you asked about swag, a Google Form would pop up. The Claude Code team actually [hand-packed the mailers for the first 1k folks](https://www.threads.com/@boris_cherny/post/DG_bYTJTDgb/claude-code-team-hand-mailing-stickers-to-the-first-1k-people-that-discovered-ou).
@@ -45,17 +44,37 @@ export function roll(userId: string): Roll {
 }
 ```
 
-Notice `mulberry32` being used: a 32-bit deterministic pseudo-random number generator. It is not cryptographically secure, but the source indicates it is "good enough for picking ducks". Because it operates in a 32-bit space, there are exactly 2^32 (about 4.29 billion) possible PRNG states, which is trivial for a modern CPU to brute force in seconds. Calling `rollFrom` in a a simple loop to iterate from 0 to 2^32, you can determine seeds that result in legendaries. There's 42,989,564 possible legendaries, which means a 1% chance of your userId being legendary.
+Notice `mulberry32` being used: a 32-bit deterministic pseudo-random number generator. It is not cryptographically secure, but the source indicates it is "good enough for picking ducks". Because it operates in a 32-bit space, there are exactly 2^32 (about 4.29 billion) possible PRNG states, which is trivial for a modern CPU to brute force in seconds. That means you can pick any combo you want and find a matching UUID in seconds, just using your browser. So let's do exactly that...
 
-### "God" Rolls
+### Build your own
 
-Brute-forcing all 2^32 seeds and filtering for legendary + shiny + at least one stat at 100, here are the top 20 god-roll UUIDs. ~Can you "fake" your `config.oauthAccount?.accountUuid` / `config.userID` in `~/.claude.json` to one of these values to achieve these buddies? We'll find out when the buddy system is actually released tomorrow!~ [Yes you can!](#unlocking-your-god-roll)
+Choose your ideal species, eyes, hat, rarity, and shiny. We'll brute-force a UUID that rolls your exact combo, right in your browser:
 
-<GodRolls />
+<BuddyPicker />
+
+To use your UUID, edit `~/.claude.json` and change `oauthAccount.accountUuid` to the generated value, then restart Claude Code. As far as I can tell, changing this value has no negative effect on how Claude Code operates, but it doesn't hurt to capture a backup first.
+
+Since the name and personality are LLM-generated (not deterministic), they're stored in a separate `companion` section you can also customize freely:
+
+```json
+{
+  "oauthAccount": {
+    "accountUuid": "461d455b-53f9-4f07-87c5-46dc0e2db302"
+  },
+  "companion": {
+    "name": "Gristle",
+    "personality": "Insists every variable name should rhyme with the one above it."
+  }
+}
+```
+
+So go ahead, build your shiny wizard axolotl, give it whatever name you want, and let it judge your code.
+
+![Claude Code buddy example](/claude/claude-buddy-example.png)
 
 ### But wait: there's more!
 
-Buddies were just released in Claude Code v2.1.89 (just type `/buddy`).
+This post was written before the buddy system came out, now that it is out in Claude Code v2.1.89 (just type `/buddy`) I've uncovered a little more info.
 
 It looks like buddies also get names, and all the previously unused stats (shiny, etc.) influence the name and personality. Here's the system prompt:
 
@@ -85,30 +104,4 @@ If the API call fails, it falls back to one of 6 hardcoded default names. Here's
 
 <BuddyNames />
 
-### Unlocking your "God" roll
-
-You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accountUuid` to any of the god-roll UUIDs above (or generate one with the picker below) and restart Claude Code. And if you're worried: as far as I can tell, changing your `oauthAccount.accountUuid` has no negative effect on how Claude Code operates, but it doesn't hurt to capture a backup first.
-
-Since names and personalities are LLM-generated (not deterministic), they're stored in a separate `companion` section of the config that you can also customize:
-
-```json
-{
-  "oauthAccount": {
-    "accountUuid": "461d455b-53f9-4f07-87c5-46dc0e2db302"
-  },
-  "companion": {
-    "name": "Gristle",
-    "personality": "Insists every variable name should rhyme with the one above it."
-  }
-}
-```
-
-So go ahead, unlock your shiny wizard axolotl, give it whatever name you want, and let it judge your code.
-
-![Claude Code buddy example](/claude/claude-buddy-example.png)
-
-### Build your own
-
-Don't want a pre-rolled "god" tier? Use the picker below to choose your ideal species, eyes, hat, rarity, and shiny. We'll brute-force a random v4 UUID to find one that rolls your exact combo, right in your browser:
-
-<BuddyPicker />
+There's also an interesting "reaction" system: occasionally (or when addressed directly) your buddy will react to what is going on in your Claude Code session. As you would expect, the endpoint (`POST /api/organizations/{org_uuid}/claude_code/buddy_react`) also takes the buddy's <BuddyLabel type="name" />, <BuddyLabel type="personality" />, <BuddyLabel type="species" />, <BuddyLabel type="rarity" />, and <BuddyLabel type="stats" /> (<BuddyLabel type="debugging" />, <BuddyLabel type="patience" />, <BuddyLabel type="chaos" />, <BuddyLabel type="wisdom" />, <BuddyLabel type="snark" />) into account. These reactions don't count against your usage quota though... free inference, anybody?

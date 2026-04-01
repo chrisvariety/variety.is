@@ -283,12 +283,9 @@ const rarityStars: Record<string, string> = {
   };
 
   let currentUuid = '';
-  let searching = false;
   let searchAbort: (() => void) | null = null;
 
   function initPicker() {
-    const container = document.getElementById('buddy-picker')!;
-
     // Wire up all picker groups
     for (const [key, groupId] of [['rarity','pick-rarity'],['species','pick-species'],['eye','pick-eye'],['hat','pick-hat'],['shiny','pick-shiny']] as const) {
       const group = document.getElementById(groupId)!;
@@ -390,10 +387,7 @@ const rarityStars: Record<string, string> = {
   function updateStats(bones: Bones) {
     const container = document.getElementById('picker-stats')!;
     const peak = Math.max(...Object.values(bones.stats));
-    const statColors: Record<string, string> = {
-      DEBUGGING: 'oklch(60% 0.15 150)', PATIENCE: 'oklch(65% 0.12 240)',
-      CHAOS: 'oklch(60% 0.18 25)', WISDOM: 'oklch(65% 0.15 280)', SNARK: 'oklch(65% 0.15 50)',
-    };
+
     container.innerHTML = STAT_NAMES.map(name => {
       const val = bones.stats[name] ?? 0;
       const isPeak = val === peak;

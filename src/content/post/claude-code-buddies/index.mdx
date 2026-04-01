@@ -9,6 +9,7 @@ import BuddySystem from "./BuddySystem.astro";
 import BuddyLabel from "./BuddyLabel.astro";
 import BuddyExplorer from "./BuddyExplorer.astro";
 import GodRolls from "./GodRolls.astro";
+import BuddyNames from "./BuddyNames.astro";
 
 When Claude Code first came out there was a little easter egg discoverable by looking through the source on release day: if you asked about swag, a Google Form would pop up. The Claude Code team actually [hand-packed the mailers for the first 1k folks](https://www.threads.com/@boris_cherny/post/DG_bYTJTDgb/claude-code-team-hand-mailing-stickers-to-the-first-1k-people-that-discovered-ou).
 
@@ -47,6 +48,58 @@ Notice `mulberry32` being used: a 32-bit deterministic pseudo-random number gene
 
 ### "God" Rolls
 
-Brute-forcing all 2^32 seeds and filtering for legendary + shiny + at least one stat at 100, here are the top 20 god-roll UUIDs. Can you "fake" your `config.oauthAccount?.accountUuid` / `config.userID` in `~/.claude.json` to one of these values to achieve these buddies? We'll find out when the buddy system is actually released tomorrow!
+Brute-forcing all 2^32 seeds and filtering for legendary + shiny + at least one stat at 100, here are the top 20 god-roll UUIDs. ~Can you "fake" your `config.oauthAccount?.accountUuid` / `config.userID` in `~/.claude.json` to one of these values to achieve these buddies? We'll find out when the buddy system is actually released tomorrow!~ [Yes you can!](#unlocking-your-god-roll)
 
 <GodRolls />
+
+### But wait: there's more!
+
+Buddies were just released in Claude Code v2.1.89 (just type `/buddy`).
+
+It looks like buddies also get names, and all the previously unused stats (shiny, etc.) influence the name and personality. Here's the system prompt:
+
+> You generate coding companions — small creatures that live in a developer's terminal and occasionally comment on their work.
+>
+> Given a rarity, species, stats, and a handful of inspiration words, invent:
+>
+> - A name: ONE word, max 12 characters. Memorable, slightly absurd. No titles, no "the X", no epithets. Think pet name, not NPC name. The inspiration words are loose anchors — riff on one, mash two syllables, or just use the vibe. Examples: Pith, Dusker, Crumb, Brogue, Sprocket.
+> - A one-sentence personality (specific, funny, a quirk that affects how they'd comment on code — should feel consistent with the stats)
+>
+> Higher rarity = weirder, more specific, more memorable. A legendary should be genuinely strange. Don't repeat yourself — every companion should feel distinct.
+
+The user message is templated with the buddy's rolled traits and 4 random inspiration words picked from a bank, e.g.:
+
+```
+Generate a companion.
+Rarity: LEGENDARY
+Species: owl
+Stats: debugging:86 patience:51 chaos:80 wisdom:71 snark:100
+Inspiration words: cobble, fennel, apex, murmur
+SHINY variant — extra special.
+
+Make it memorable and distinct.
+```
+
+If the API call fails, it falls back to one of 6 hardcoded default names. Here's the 6 hardcoded fallback names and the complete 156-word inspiration bank:
+
+<BuddyNames />
+
+### Unlocking your "God" roll
+
+You can swap your buddy by editing `~/.claude.json`. Change `oauthAccount.accountUuid` to any of the god-roll UUIDs above and restart Claude Code — your new shiny legendary will appear. Since names and personalities are LLM-generated (not deterministic), they're stored in a separate `companion` section of the config that you can also customize:
+
+```json
+{
+  "oauthAccount": {
+    "accountUuid": "3f6c5f24-86f4-4131-b02b-d8f1dd1c36b8"
+  },
+  "companion": {
+    "name": "Gristle",
+    "personality": "Insists every variable name should rhyme with the one above it."
+  }
+}
+```
+
+So go ahead, unlock your shiny wizard axolotl, give it whatever name you want, and let it judge your code.
+
+![Claude Code buddy example](/claude/claude-buddy-example.png)

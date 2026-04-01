@@ -1,0 +1,72 @@
+---
+const inspirationWords = [
+  "thunder","biscuit","void","accordion","moss","velvet","rust","pickle","crumb","whisper",
+  "gravy","frost","ember","soup","marble","thorn","honey","static","copper","dusk",
+  "sprocket","bramble","cinder","wobble","drizzle","flint","tinsel","murmur","clatter","gloom",
+  "nectar","quartz","shingle","tremor","umber","waffle","zephyr","bristle","dapple","fennel",
+  "gristle","huddle","kettle","lumen","mottle","nuzzle","pebble","quiver","ripple","sable",
+  "thistle","vellum","wicker","yonder","bauble","cobble","doily","fickle","gambit","hubris",
+  "jostle","knoll","larder","mantle","nimbus","oracle","plinth","quorum","relic","spindle",
+  "trellis","urchin","vortex","warble","xenon","yoke","zenith","alcove","brogue","chisel",
+  "dirge","epoch","fathom","glint","hearth","inkwell","jetsam","kiln","lattice","mirth",
+  "nook","obelisk","parsnip","quill","rune","sconce","tallow","umbra","verve","wisp",
+  "yawn","apex","brine","crag","dregs","etch","flume","gable","husk","ingot",
+  "jamb","knurl","loam","mote","nacre","ogle","prong","quip","rind","slat",
+  "tuft","vane","welt","yarn","bane","clove","dross","eave","fern","grit",
+  "hive","jade","keel","lilt","muse","nape","omen","pith","rook","silt",
+  "tome","urge","vex","wane","yew","zest",
+];
+
+const defaultNames = ["Crumpet", "Soup", "Pickle", "Biscuit", "Moth", "Gravy"];
+
+// Generate consistent pastel colors from string
+function nameColor(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const hue = ((hash % 360) + 360) % 360;
+  return `oklch(65% 0.12 ${hue})`;
+}
+---
+
+<div class="not-prose my-6 overflow-hidden rounded-lg border border-(--color-muted)/20">
+  <table class="w-full text-sm">
+    <tbody>
+      <tr class="border-b border-(--color-muted)/10">
+        <td class="whitespace-nowrap bg-(--color-muted)/3 px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase w-[1%] border-r border-(--color-muted)/10 align-top">
+          Defaults
+        </td>
+        <td class="px-5 py-2.5">
+          <span class="flex flex-wrap gap-x-1.5 gap-y-1 text-xs">
+            {defaultNames.map((name, i) => (
+              <>
+                <span style={`color: ${nameColor(name)}`}>{name}</span>
+                {i < defaultNames.length - 1 && (
+                  <span class="text-muted/40">,</span>
+                )}
+              </>
+            ))}
+          </span>
+        </td>
+      </tr>
+      <tr class="border-b border-(--color-muted)/10 last:border-b-0">
+        <td class="whitespace-nowrap bg-(--color-muted)/3 px-5 py-2.5 text-xs font-semibold tracking-wide text-muted uppercase w-[1%] border-r border-(--color-muted)/10 align-top">
+          Inspiration
+        </td>
+        <td class="px-5 py-2.5">
+          <span class="flex flex-wrap gap-x-1.5 gap-y-1 text-xs">
+            {inspirationWords.map((word, i) => (
+              <>
+                <span style={`color: ${nameColor(word)}`}>{word}</span>
+                {i < inspirationWords.length - 1 && (
+                  <span class="text-muted/40">,</span>
+                )}
+              </>
+            ))}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

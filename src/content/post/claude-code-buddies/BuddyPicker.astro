@@ -191,9 +191,6 @@ const rarityStars: Record<string, string> = {
     for (let i = 0; i < n && o + i < d.length; i++) r |= BigInt(d[o + i]!) << (BigInt(i) * 8n);
     return BigInt.asUintN(64, r);
   }
-  function _wyr8s(d: Uint8Array, o: number): bigint {
-    return (_wyrd(d, o, 4) << 32n) | _wyrd(d, o + 4, 4);
-  }
   function wyhash(str: string): bigint {
     const input = new TextEncoder().encode(str);
     const len = input.length;

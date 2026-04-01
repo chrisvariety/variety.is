@@ -28,8 +28,12 @@ const rarityStars: Record<string, string> = {
 
 <div class="not-prose my-8 rounded-lg border border-(--color-muted)/20 overflow-hidden" id="buddy-picker">
   {/* Trait selectors */}
-  <div class="border-b border-(--color-muted)/10 bg-(--color-muted)/3 px-5 py-3">
+  <div class="border-b border-(--color-muted)/10 bg-(--color-muted)/3 px-5 py-3 flex items-center justify-between">
     <span class="text-xs font-semibold uppercase tracking-wide text-muted">Build your buddy</span>
+    <button id="picker-random" class="flex items-center gap-1.5 px-2.5 py-1 rounded text-xs border border-(--color-muted)/20 text-muted/60 cursor-pointer transition-all hover:border-(--color-muted)/40 hover:text-muted" title="Random buddy">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg>
+      Random
+    </button>
   </div>
 
   {/* Rarity */}
@@ -467,7 +471,7 @@ const rarityStars: Record<string, string> = {
     const copyBtn = document.getElementById('picker-copy')!;
     const rerollBtn = document.getElementById('picker-reroll')!;
 
-    uuidEl.textContent = 'searching\u2026';
+    uuidEl.textContent = state.shiny ? 'searching\u2026 (shiny can take a bit!)' : 'searching\u2026';
     statusEl.textContent = '';
     copyBtn.classList.add('hidden');
     rerollBtn.classList.add('hidden');
@@ -475,6 +479,7 @@ const rarityStars: Record<string, string> = {
     const target = { ...state };
     let aborted = false;
     searchAbort = () => { aborted = true; };
+    const searchStart = performance.now();
 
     // Search in batches to keep UI responsive
     // BigInt wyhash is ~10x slower than FNV-1a, so smaller batches
@@ -495,7 +500,9 @@ const rarityStars: Record<string, string> = {
         ) {
           currentUuid = uuid;
           uuidEl.textContent = uuid;
-          statusEl.textContent = `found after ${(tried + i + 1).toLocaleString()} UUIDs`;
+          const elapsed = performance.now() - searchStart;
+          const timeStr = elapsed < 1000 ? `${Math.round(elapsed)}ms` : `${(elapsed / 1000).toFixed(1)}s`;
+          statusEl.textContent = `found after ${(tried + i + 1).toLocaleString()} UUIDs (${timeStr})`;
           copyBtn.classList.remove('hidden');
           rerollBtn.classList.remove('hidden');
           updateStats(bones);
@@ -529,6 +536,48 @@ const rarityStars: Record<string, string> = {
   // --- Reroll button ---
   document.getElementById('picker-reroll')?.addEventListener('click', () => {
     findUuid();
+  });
+
+  // --- Random roulette button ---
+  document.getElementById('picker-random')?.addEventListener('click', () => {
+    const btn = document.getElementById('picker-random') as HTMLButtonElement;
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+
+    // Abort any ongoing search during roulette
+    if (searchAbort) { searchAbort(); searchAbort = null; }
+    const uuidEl = document.getElementById('picker-uuid')!;
+    const statusEl = document.getElementById('picker-status')!;
+    const copyBtn = document.getElementById('picker-copy')!;
+    const rerollBtn = document.getElementById('picker-reroll')!;
+    uuidEl.textContent = 'rolling\u2026';
+    statusEl.textContent = '';
+    copyBtn.classList.add('hidden');
+    rerollBtn.classList.add('hidden');
+
+    const DURATION = 500;
+    const INTERVAL = 50;
+    const steps = Math.floor(DURATION / INTERVAL);
+    let step = 0;
+
+    const ticker = setInterval(() => {
+      // Pick random values for each trait
+      state.rarity = RARITIES[Math.floor(Math.random() * RARITIES.length)]!;
+      state.species = SPECIES[Math.floor(Math.random() * SPECIES.length)]!;
+      state.eye = EYES[Math.floor(Math.random() * EYES.length)]!;
+      state.hat = state.rarity === 'common' ? 'none' : HATS[Math.floor(Math.random() * HATS.length)]!;
+      state.shiny = Math.random() < 0.15; // slightly higher chance during roulette for fun
+      updateUI();
+
+      step++;
+      if (step >= steps) {
+        clearInterval(ticker);
+        btn.disabled = false;
+        btn.style.opacity = '';
+        findUuid();
+      }
+    }, INTERVAL);
   });
 
   // --- Init ---
